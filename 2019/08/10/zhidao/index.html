@@ -15,7 +15,7 @@
 <meta property="og:site_name" content="Johny的博客">
 <meta property="og:description" content="Django ORM操作最常用的ORM方法   方法 描述     all() 返回所有结果 返回QuerySet对象   get(**kwargs) 返回与所给筛选条件相匹配的对象，返回结果有且只有一个，如果符合筛选条件的对象超过一个或者没有都会抛出错误 返回具体对象   filter(**kwargs) 它包含了与所给筛选条件相匹配的对象 返回QuerySet对象   exclude(**kw">
 <meta property="og:locale" content="zh">
-<meta property="og:updated_time" content="2019-08-27T09:00:38.727Z">
+<meta property="og:updated_time" content="2019-08-27T09:44:27.396Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Django ORM 操作">
 <meta name="twitter:description" content="Django ORM操作最常用的ORM方法   方法 描述     all() 返回所有结果 返回QuerySet对象   get(**kwargs) 返回与所给筛选条件相匹配的对象，返回结果有且只有一个，如果符合筛选条件的对象超过一个或者没有都会抛出错误 返回具体对象   filter(**kwargs) 它包含了与所给筛选条件相匹配的对象 返回QuerySet对象   exclude(**kw">
@@ -230,82 +230,78 @@
 <h3 id="多表查询之ManyToManyField"><a href="#多表查询之ManyToManyField" class="headerlink" title="多表查询之ManyToManyField"></a>多表查询之ManyToManyField</h3><blockquote>
 <p>“关联管理器” 是在一对多或者多对多的关联上下文中使用的管理器。</p>
 <p>它存在于下面两种情况：</p>
-<p>　　1、外键关系的反向查询</p>
-<p>　　2、多对多关联关系</p>
+<ol>
+<li><p>外键关系的反向查询</p>
+</li>
+<li><p>多对多关联关系</p>
+</li>
+</ol>
 <p>简单来说就是当 点后面的对象 可能存在多个的时候就可以使用以下的方法。</p>
 </blockquote>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">create() <span class="comment"># ==&gt; 返回新创建的对象</span></span><br><span class="line"><span class="comment"># 为序号为第一个人添加写的书的对象，添加一本书‘活着’</span></span><br><span class="line">models.Person.objects.first().book_set.create(name=<span class="string">'活着'</span>)</span><br><span class="line"></span><br><span class="line">add() <span class="comment"># ==&gt; 把指定的model对象添加到关联对象集中</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 查询id号小于3的人的对象</span></span><br><span class="line">per_obj = models.Person.objects.filter(id__lt=<span class="number">3</span>)</span><br><span class="line"><span class="comment"># 因为 books = models.ManyToManyField('Book') 所以是反向，需要 人表_set.add</span></span><br><span class="line">ret = models.Book.objects.last().person_set.add(per_obj)</span><br><span class="line">ret = models.Book.objects.first().person_set.add(*[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>]) <span class="comment">#一次添加多个</span></span><br><span class="line"><span class="comment"># Person类里面有books字段，所以 直接表名.add</span></span><br><span class="line">ret = models.Person.objects.filter(id=<span class="number">3</span>).first().books.add()</span><br><span class="line">                                             </span><br><span class="line">set() <span class="comment"># ==&gt; 更新model对象的关联对象</span></span><br><span class="line">models.Book.objects.first().person_set.set([<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>]) </span><br><span class="line"></span><br><span class="line">remove() <span class="comment"># ==&gt; 从关联对象集中移除执行的model对象</span></span><br><span class="line">book_obj = models.Book.objects.get(id=<span class="number">3</span>).person_set.remove(<span class="number">3</span>)</span><br><span class="line"></span><br><span class="line">clear() <span class="comment"># ==&gt; 从关联对象集中移除一切对象，清空。</span></span><br><span class="line">book_obj= models.Book.objects.first().person_set().clear()</span><br></pre></td></tr></table></figure>
 
 <blockquote>
-<p>注：</p>
 <ol>
-<li><p>对于外键对象，clear（）和remove（）方法仅在null=True时存在。</p>
-</li>
-<li><p>对于所有类型的<strong>关联字段</strong>，add()、create()、remove()、clear() 、set() 都会马上更新数据库，换句话说，在关联的任何一端，都不需要再调用save()方法。</p>
-</li>
-<li><p>对于改变单表未关联其它表的字段，需要使用save（）一下。</p>
-</li>
+<li>对于外键对象，clear（）和remove（）方法仅在null=True时存在。</li>
+<li>对于所有类型的<strong>关联字段</strong>，add()、create()、remove()、clear() 、set() 都会马上更新数据库，换句话说，在关联的任何一端，都不需要再调用save()方法。</li>
+<li>对于改变单表未关联其它表的字段，需要使用save（）一下。<br>　　per_obj.name = new_name<br>　　per_obj.save()</li>
 </ol>
-<p>　　per_obj.name = new_name</p>
-<p>　　per_obj.save()</p>
 </blockquote>
 <h3 id="聚合查询和分组查询"><a href="#聚合查询和分组查询" class="headerlink" title="聚合查询和分组查询"></a>聚合查询和分组查询</h3><blockquote>
 <p><strong>聚合查询:即mysql中的聚合函数sum(),count(),avg()…</strong></p>
-<p>aggregate()是querySet的一个终止子句，意思即，它返回一个包含一些键值对的字典。</p>
-<p>键的名称是聚合值的标识符，值是计算出来得聚合值。键的名称是按照字段和聚合函数的名称自动生成出来的。</p>
+<p>aggregate()是querySet的一个终止子句，意思即，它返回一个包含一些键值对的字典。<br>键的名称是聚合值的标识符，值是计算出来得聚合值。键的名称是按照字段和聚合函数的名称自动生成出来的。</p>
 </blockquote>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.db.models <span class="keyword">import</span> Avg,Sum,Max,Min,Count</span><br><span class="line"><span class="comment"># 求平均值 最大值，最小值</span></span><br><span class="line">models.Book.objects.all().aggregate(Avg(<span class="string">'price'</span>), Max(<span class="string">'price'</span>),Min(<span class="string">'price'</span>))</span><br><span class="line">&#123;<span class="string">'price__avg'</span>: <span class="number">13.233333</span>, <span class="string">'price__max'</span>: Decimal(<span class="string">'19.90'</span>), <span class="string">'price__min'</span>: Decimal(<span class="string">'9.90'</span>)&#125;</span><br></pre></td></tr></table></figure>
 
 <blockquote>
 <p><strong>分组：即mysql中的group_by，使用annotate()方法</strong></p>
 </blockquote>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.db.models <span class="keyword">import</span> Avg</span><br><span class="line"><span class="comment"># 单表 部门分组求平均工资</span></span><br><span class="line">Employee.objects.values(<span class="string">"dept"</span>).annotate(avg=Avg(<span class="string">"salary"</span>)）.values(<span class="string">"dept"</span>, <span class="string">"avg"</span>)</span><br><span class="line"><span class="comment"># ==&gt; select dept,AVG(salary) from employee group by dept;</span></span><br><span class="line"></span><br><span class="line">                                         </span><br><span class="line"><span class="comment"># 链表 查询的分组 求平均工资                                         </span></span><br><span class="line"> models.Dept.objects.all().annotate(avg=Avg(<span class="string">"employee__salary"</span>)).values(<span class="string">"name"</span>, <span class="string">"avg"</span>)</span><br><span class="line"><span class="comment"># ==&gt; select dept.name,AVG(salary) from employee </span></span><br><span class="line"> inner join dept </span><br><span class="line"> on (employee.dept_id=dept.id) </span><br><span class="line"> group by dept_id;</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.db.models <span class="keyword">import</span> Avg</span><br><span class="line"><span class="comment"># 单表 部门分组求平均工资</span></span><br><span class="line">Employee.objects.values(<span class="string">"dept"</span>).annotate(avg=Avg(<span class="string">"salary"</span>)）.values(<span class="string">"dept"</span>, <span class="string">"avg"</span>)</span><br><span class="line"><span class="comment"># ==&gt; select dept,AVG(salary) from employee group by dept;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 链表 查询的分组 求平均工资                                       </span></span><br><span class="line"> models.Dept.objects.all().annotate(avg=Avg(<span class="string">"employee__salary"</span>)).values(<span class="string">"name"</span>, <span class="string">"avg"</span>)</span><br><span class="line"><span class="comment"># ==&gt; select dept.name,AVG(salary) from employee </span></span><br><span class="line"> inner join dept </span><br><span class="line"> on (employee.dept_id=dept.id) </span><br><span class="line"> group by dept_id;</span><br></pre></td></tr></table></figure>
 
 <blockquote>
 <p>统计每一本书的作者个数</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt; book_list = models.Book.objects.all().annotate(author_num=Count(<span class="string">'author'</span>))</span><br><span class="line">&gt; <span class="comment"># 先通过count里的author字段进行分组，然后再调用count方法计数</span></span><br><span class="line">&gt; </span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
 </blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">book_list = models.Book.objects.all().annotate(author_num=Count(<span class="string">'author'</span>))</span><br><span class="line"><span class="comment"># 先通过count里的author字段进行分组，然后再调用count方法计数</span></span><br></pre></td></tr></table></figure>
+
 <blockquote>
 <p>统计出每个出版社买的最便宜的书的价格</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&gt; <span class="comment"># 正向</span></span><br><span class="line">&gt; pub_list = models.Publisher.objects.annotate(min_price=Min(<span class="string">'book__price'</span>))</span><br><span class="line">&gt; <span class="comment"># 反向</span></span><br><span class="line">&gt; models.Book.objects.values(<span class="string">'publisher__name'</span>).annotate(min_price=Min(<span class="string">'price'</span>))</span><br><span class="line">&gt; </span><br><span class="line">&gt; </span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
 </blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt; <span class="comment"># 正向</span></span><br><span class="line">&gt; pub_list = models.Publisher.objects.annotate(min_price=Min(<span class="string">'book__price'</span>))</span><br><span class="line">&gt; <span class="comment"># 反向</span></span><br><span class="line">&gt; models.Book.objects.values(<span class="string">'publisher__name'</span>).annotate(min_price=Min(<span class="string">'price'</span>))</span><br></pre></td></tr></table></figure>
+
 <blockquote>
 <p>统计不止一个作者的图书</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt; models.Book.objects.annotate(author_num=Count(<span class="string">'author'</span>)).filter(author_num__gt=<span class="number">1</span>)</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
 </blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">models.Book.objects.annotate(author_num=Count(<span class="string">'author'</span>)).filter(author_num__gt=<span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+
 <blockquote>
 <p>根据一本图书作者数量的多少对查询集QuerSet进行排序</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt; models.Book.objects.annotate(author_num=Count(<span class="string">'author'</span>)).order_by(<span class="string">'author_num'</span>)</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
 </blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">models.Book.objects.annotate(author_num=Count(<span class="string">'author'</span>)).order_by(<span class="string">'author_num'</span>)</span><br></pre></td></tr></table></figure>
+
 <blockquote>
 <p>查询各个作者出的书的总价格</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt; models.Author.objects.annotate(sum_price=Sum(<span class="string">'book__price'</span>)).values(<span class="string">'name'</span>,<span class="string">'sum_price'</span>)</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
 </blockquote>
-<blockquote>
-</blockquote>
-<h3 id="F查询和Q查询"><a href="#F查询和Q查询" class="headerlink" title="F查询和Q查询"></a>F查询和Q查询</h3><blockquote>
-<p>from django.db.models import F,Q</p>
-<p><strong>F查询</strong></p>
-<p>Django提供F()方法来做这样的比较，</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">models.Author.objects.annotate(sum_price=Sum(<span class="string">'book__price'</span>)).values(<span class="string">'name'</span>,<span class="string">'sum_price'</span>)</span><br></pre></td></tr></table></figure>
+
+<h3 id="F查询和Q查询"><a href="#F查询和Q查询" class="headerlink" title="F查询和Q查询"></a>F查询和Q查询</h3><h4 id="F查询"><a href="#F查询" class="headerlink" title="F查询"></a><strong>F查询</strong></h4><p>Django提供F()方法来做这样的比较</p>
 <p>F()的实例可以在查询中引用字段，来比较同一个model实例中两个不同字段的值。</p>
-</blockquote>
 <hr>
 <blockquote>
 <p>查询评论数大于收藏数的书籍</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&gt; <span class="keyword">from</span> django.db.models <span class="keyword">import</span> F</span><br><span class="line">&gt; </span><br><span class="line">&gt; models.Book.objects.filter(commnet_num__gt=F(<span class="string">'keep_num'</span>))</span><br><span class="line">&gt; </span><br><span class="line">&gt; <span class="comment"># Django 支持F()对象之间以及F()对象和常数之间的加减乘除和取模的操作</span></span><br><span class="line">&gt; models.Book.objects.filter(comment_num__lt=F(<span class="string">'keep_num'</span>)*<span class="number">2</span>)</span><br><span class="line">&gt; </span><br><span class="line">&gt; <span class="comment">#修改操作也可以使用F函数，比如将每一本数书的价格提高30元</span></span><br><span class="line">&gt; models.Book.objects.all().update(price=F(<span class="string">'price'</span>)+<span class="number">30</span>)</span><br><span class="line">&gt; </span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
 </blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.db.models <span class="keyword">import</span> F</span><br><span class="line"></span><br><span class="line">models.Book.objects.filter(commnet_num__gt=F(<span class="string">'keep_num'</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment"># Django 支持F()对象之间以及F()对象和常数之间的加减乘除和取模的操作</span></span><br><span class="line">models.Book.objects.filter(comment_num__lt=F(<span class="string">'keep_num'</span>)*<span class="number">2</span>)</span><br><span class="line"> </span><br><span class="line"><span class="comment">#修改操作也可以使用F函数，比如将每一本数书的价格提高30元</span></span><br><span class="line">models.Book.objects.all().update(price=F(<span class="string">'price'</span>)+<span class="number">30</span>)</span><br></pre></td></tr></table></figure>
+
 <blockquote>
 <p>详解增加表数据</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&gt; <span class="comment"># save 方法增加数据</span></span><br><span class="line">&gt; author = Author.objects.get(id=<span class="number">5</span>)</span><br><span class="line">&gt; author.name=<span class="string">'jony'</span></span><br><span class="line">&gt; author.save()</span><br><span class="line">&gt; </span><br><span class="line">&gt; <span class="comment"># update 方法更新数据</span></span><br><span class="line">&gt; Publisher.objects.filter(id=<span class="number">5</span>).update(name=<span class="string">'American publisher'</span>) <span class="comment">#不能用get(id=2)</span></span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
 </blockquote>
-<blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># save 方法增加数据</span></span><br><span class="line">author = Author.objects.get(id=<span class="number">5</span>)</span><br><span class="line">author.name=<span class="string">'jony'</span></span><br><span class="line">author.save()</span><br><span class="line"> </span><br><span class="line"><span class="comment"># update 方法更新数据</span></span><br><span class="line">Publisher.objects.filter(id=<span class="number">5</span>).update(name=<span class="string">'American publisher'</span>) <span class="comment">#不能用get(id=2)</span></span><br></pre></td></tr></table></figure>
+
 <p>注意：</p>
 <p>&lt;1&gt; update方法更新数据修改不能用get的原因是：update是QuerySet对象的方法，get返回的是一个具体model对象，它没有update方法</p>
 <p>而filter返回的是一个QuerySet对象(filter里面的条件可能有多个条件符合，比如name＝’jony’,可能有两个name＝’jony’的行数据)。</p>
 <p>&lt;2&gt;<strong>models模型的save()方法，这个方法会更新一行里的所有列。 而某些情况下，我们只需要更新行里的某几列，update效率更高。</strong> </p>
 <p>此外，update()方法对于任何结果集（QuerySet）均有效，这意味着你可以同时更新多条记录update()方法会返回一个整型数值，表示受影响的记录条数。</p>
 <p>注意，这里因为update返回的是一个整形，所以没法用query属性；对于每次创建一个对象，想显示对应的raw sql，需要在settings加上日志记录部分</p>
-</blockquote>
 <p><strong>Q查询：</strong><code>filter()</code> 等方法中的关键字参数查询都是一起进行“AND” 的。 如果你需要执行更复杂的查询（例如<code>OR</code> 语句），你可以使用<code>Q 对象</code>。</p>
 <blockquote>
 <p>查询id大于1并且评论数大于100的书</p>
@@ -329,8 +325,9 @@
 
 <blockquote>
 <p>查询函数可以混合使用<code>Q 对象</code>和关键字参数。所有提供给查询函数的参数（关键字参数或<code>Q</code> 对象）都将”AND”在一起。但是，如果出现<code>Q</code> 对象，它必须位于所有关键字参数的前面。例如：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt; bookList=models.Book.objects.filter(Q(publishDateyear=<span class="number">2016</span>) | Q(publishDateyear=<span class="number">2017</span>),title__icontains=<span class="string">"python"</span>) </span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
 </blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bookList=models.Book.objects.filter(Q(publishDateyear=<span class="number">2016</span>) | Q(publishDateyear=<span class="number">2017</span>),title__icontains=<span class="string">"python"</span>)</span><br></pre></td></tr></table></figure>
+
 <h3 id="ORM表自关联"><a href="#ORM表自关联" class="headerlink" title="ORM表自关联"></a>ORM表自关联</h3><blockquote>
 <p>内自关联是指表内数据相关联的对象和表是相同字段，这样我们就直接用表内关联将外键关联设置成自身表的字段。同样表内关联也分一对多字段和多对多字段</p>
 </blockquote>
@@ -374,16 +371,19 @@
 </tbody></table>
 <blockquote>
 <p>通过筛选父评论关联字段等于1的对象</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt; Comment.objects.filter(pcomment_id=<span class="number">1</span>)</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
 </blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Comment.objects.filter(pcomment_id=<span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+
 <blockquote>
 <p>根据子评论关联id正在查找父评论的内容</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt; Comment.objects.filter(pcomment_id=<span class="number">2</span>).values(<span class="string">'pcomement__content'</span>)</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
 </blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Comment.objects.filter(pcomment_id=<span class="number">2</span>).values(<span class="string">'pcomement__content'</span>)</span><br></pre></td></tr></table></figure>
+
 <blockquote>
 <p>根据父评论的id 反向查找子评论</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt; Comment.objects.filter(id=<span class="number">1</span>).values(<span class="string">'comment__id'</span><span class="string">')</span></span><br><span class="line"><span class="string">&gt;</span></span><br></pre></td></tr></table></figure>
 </blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Comment.objects.filter(id=<span class="number">1</span>).values(<span class="string">'comment__id'</span><span class="string">')</span></span><br></pre></td></tr></table></figure>
+
 <blockquote>
 <p>注意：外键关联是在子评论中，有关联字段的是子评论，子评论查父评论是正向，父评论查子评论是反向。</p>
 </blockquote>
@@ -391,32 +391,39 @@
 
 <blockquote>
 <p>正向查找关联字段__name 查找沁阳的基友</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt; Person.objects.filter(name=<span class="string">'沁阳'</span>).values(<span class="string">'friends__name'</span>)</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
 </blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Person.objects.filter(name=<span class="string">'沁阳'</span>).values(<span class="string">'friends__name'</span>)</span><br></pre></td></tr></table></figure>
+
 <blockquote>
 <p>反向查找 沁阳的基友</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt; Person.objects.all().filter(ship__name=<span class="string">'沁阳'</span>)</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
 </blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Person.objects.all().filter(ship__name=<span class="string">'沁阳'</span>)</span><br></pre></td></tr></table></figure>
+
 <blockquote>
 <p>正向查找 王帅的朋友</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt; Person.objects.get(name=<span class="string">'王帅'</span>).friends.all()</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
 </blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Person.objects.get(name=<span class="string">'王帅'</span>).friends.all()</span><br></pre></td></tr></table></figure>
+
 <blockquote>
 <p>反向查找 是王帅朋友的人</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt; Person.objects.filter(ship__name=<span class="string">'王帅'</span>)</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
 </blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Person.objects.filter(ship__name=<span class="string">'王帅'</span>)</span><br></pre></td></tr></table></figure>
+
 <blockquote>
 <p>基友是沁阳的那个人反向查找</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt; Person.objects.get(name=<span class="string">'沁阳'</span>).ship.all()</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
 </blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Person.objects.get(name=<span class="string">'沁阳'</span>).ship.all()</span><br></pre></td></tr></table></figure>
+
 <blockquote>
 <p>基友是王帅的那个人反向查找</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt; Person.objects.get(name=<span class="string">'王帅'</span>).ship.all()</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
 </blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Person.objects.get(name=<span class="string">'王帅'</span>).ship.all()</span><br></pre></td></tr></table></figure>
+
 <blockquote>
 <p>基友含有沁阳的人反向</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt; Person.objects.filter(name=<span class="string">'沁阳'</span>).values(<span class="string">'ship__name'</span>)</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
 </blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Person.objects.filter(name=<span class="string">'沁阳'</span>).values(<span class="string">'ship__name'</span>)</span><br></pre></td></tr></table></figure>
+
 <blockquote>
 <p>注意：查找某人的朋友是正向，查找朋友里面有某人的人是反向查找</p>
 </blockquote>
