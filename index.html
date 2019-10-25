@@ -159,33 +159,11 @@
       
       
         
-        <li class="menu-item menu-item-about">
-      
-    
-
-    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>About</a>
-
-  </li>
-      
-      
-      
-        
         <li class="menu-item menu-item-tags">
       
     
 
     <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>Tags</a>
-
-  </li>
-      
-      
-      
-        
-        <li class="menu-item menu-item-categories">
-      
-    
-
-    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>Categories</a>
 
   </li>
       
@@ -220,6 +198,303 @@
           <div id="content" class="content">
             
   <div id="posts" class="posts-expand">
+        <article itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block home">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/29/DRF_version/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Johny cai">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Johny的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+            
+            <a href="/2019/08/29/DRF_version/" class="post-title-link" itemprop="url">Django Rest Framework 版本控制</a>
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              
+                
+              
+
+              <time title="Created: 2019-08-29 09:10:14" itemprop="dateCreated datePublished" datetime="2019-08-29T09:10:14+08:00">2019-08-29</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2019-08-30 07:40:01" itemprop="dateModified" datetime="2019-08-30T07:40:01+08:00">2019-08-30</time>
+              </span>
+            
+          
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="Django-Rest-Framework-版本控制"><a href="#Django-Rest-Framework-版本控制" class="headerlink" title="Django Rest Framework 版本控制"></a>Django Rest Framework 版本控制</h2><h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><blockquote>
+<p>通过DRF写的视图类，都会继承APIVIEW，而APIVIEW类继承VIEW，同时其重写了as_view方法【使之cbv能够url传参】</p>
+<p>dispatch方法，重新封装了request对象</p>
+<p>将老的request对象赋值为_request</p>
+<p>前端传过来的所有数据给了：request.data</p>
+<p>之前的request.GET封装成：request.query_params</p>
+</blockquote>
+<h3 id="版本控制是做什么用的-我们为什么要用"><a href="#版本控制是做什么用的-我们为什么要用" class="headerlink" title="版本控制是做什么用的, 我们为什么要用?"></a>版本控制是做什么用的, 我们为什么要用?</h3><blockquote>
+<p>开发是有周期，及版本迭代的，新版本上线，老版本也不能直接拉下，需要进行维护</p>
+</blockquote>
+<h3 id="版本控制是怎么实现的"><a href="#版本控制是怎么实现的" class="headerlink" title="版本控制是怎么实现的"></a>版本控制是怎么实现的</h3><p>version版本信息 赋值给了 request.version  </p>
+<p>版本控制方案 赋值给了 request.versioning_scheme</p>
+<p>从而之后我们在视图中就可以通过request点属性，操作版本信息了</p>
+<p>其实这个版本控制方案<del>就是我们配置的版本控制的类</del></p>
+<p>也就是说，APIView通过这个方法初始化自己提供的组件~~</p>
+<p>DRF提供了5种版本控制类的方法：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> rest_framework <span class="keyword">import</span> versioning</span><br><span class="line"></span><br><span class="line"><span class="comment">#最基础的版本控制类，给其他版本控制类提供一些共用方法</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">BaseVersioning</span><span class="params">(object)</span>:</span> ...</span><br><span class="line">	default_version = api_settings.DEFAULT_VERSION</span><br><span class="line">    allowed_versions = api_settings.ALLOWED_VERSIONS</span><br><span class="line">    version_param = api_settings.VERSION_PARAM</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">determine_version</span><span class="params">(self, request, *args, **kwargs)</span>:</span></span><br><span class="line">        msg = <span class="string">'&#123;cls&#125;.determine_version() must be implemented.'</span></span><br><span class="line">        <span class="keyword">raise</span> NotImplementedError(msg.format(</span><br><span class="line">            cls=self.__class__.__name__</span><br><span class="line">        ))</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">reverse</span><span class="params">(self, viewname, args=None, kwargs=None, request=None, format=None, **extra)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> _reverse(viewname, args, kwargs, request, format, **extra)</span><br><span class="line"></span><br><span class="line">    <span class="comment">#判断是否能访问当前版本</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">is_allowed_version</span><span class="params">(self, version)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> self.allowed_versions:</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">True</span></span><br><span class="line">        <span class="comment">#version存在并且等于默认版本或者version在允许访问的版本中</span></span><br><span class="line">        <span class="comment">#返回True or Fasle</span></span><br><span class="line">        <span class="keyword">return</span> ((version <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span> <span class="keyword">and</span> version == self.default_version) <span class="keyword">or</span></span><br><span class="line">                (version <span class="keyword">in</span> self.allowed_versions))</span><br><span class="line"></span><br><span class="line"><span class="comment"># 在accept请求头中配置版本信息</span></span><br><span class="line"><span class="comment"># accept代表希望返回的数据类型 可以携带版本信息</span></span><br><span class="line"><span class="comment"># Accept: application/json; version=1.0</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">AcceptHeaderVersioning</span><span class="params">(BaseVersioning)</span>:</span> ...</span><br><span class="line">	<span class="keyword">pass</span></span><br><span class="line"><span class="comment"># 在url上携带版本信息</span></span><br><span class="line"><span class="comment"># url(r'^(?P&lt;version&gt;[v1|v2]+)/users/$',users_list,name='users-list')</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">URLPathVersioning</span><span class="params">(BaseVersioning)</span>:</span></span><br><span class="line">     <span class="string">"""</span></span><br><span class="line"><span class="string">    To the client this is the same style as `NamespaceVersioning`.</span></span><br><span class="line"><span class="string">    The difference is in the backend - this implementation uses</span></span><br><span class="line"><span class="string">    Django's URL keyword arguments to determine the version.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    An example URL conf for two views that accept two different versions.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    urlpatterns = [</span></span><br><span class="line"><span class="string">        url(r'^(?P&lt;version&gt;[v1|v2]+)/users/$', users_list, name='users-list'),</span></span><br><span class="line"><span class="string">        url(r'^(?P&lt;version&gt;[v1|v2]+)/users/(?P&lt;pk&gt;[0-9]+)/$', users_detail, name='users-detail')</span></span><br><span class="line"><span class="string">    ]</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    GET /1.0/something/ HTTP/1.1</span></span><br><span class="line"><span class="string">    Host: example.com</span></span><br><span class="line"><span class="string">    Accept: application/json</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    invalid_version_message = _(<span class="string">'Invalid version in URL path.'</span>)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">determine_version</span><span class="params">(self, request, *args, **kwargs)</span>:</span></span><br><span class="line">        <span class="comment">#version_param  default_version DEFAULT_VERSION 都是在settings配置</span></span><br><span class="line">        <span class="comment">#version_param :url中获取值的key</span></span><br><span class="line">        <span class="comment">#default_version :默认版本</span></span><br><span class="line">        <span class="comment">#ALLOWED_VERSIONS：允许的版本</span></span><br><span class="line">        version = kwargs.get(self.version_param, self.default_version)</span><br><span class="line">        <span class="comment">#如果version不存在,或者version不在允许访问的版本列表中</span></span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> self.is_allowed_version(version):</span><br><span class="line">            <span class="comment">#抛出异常</span></span><br><span class="line">            <span class="keyword">raise</span> exceptions.NotFound(self.invalid_version_message)</span><br><span class="line">        <span class="comment">#返回版本</span></span><br><span class="line">        <span class="keyword">return</span> version</span><br><span class="line"></span><br><span class="line"><span class="comment"># 把版本信息放在路由分发里，并把路由的namespace配置成版本</span></span><br><span class="line"><span class="comment"># url('^v1/', include('users.urls', namespace='v1'))</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">NamespaceVersioning</span><span class="params">(BaseVersioning)</span>:</span></span><br><span class="line">    <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 在我们的host上配置版本信息</span></span><br><span class="line"><span class="comment"># Host: v1.example.com</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">HostNameVersioning</span><span class="params">(BaseVersioning)</span>:</span></span><br><span class="line">    <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 在我们url上过滤条件上配置版本信息</span></span><br><span class="line"><span class="comment"># GET /something/?version=0.1 HTTP/1.1</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">QueryParameterVersioning</span><span class="params">(BaseVersioning)</span>:</span></span><br><span class="line">    <span class="keyword">pass</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="版本配置如何使用"><a href="#版本配置如何使用" class="headerlink" title="版本配置如何使用"></a>版本配置如何使用</h3><blockquote>
+<p>不管基于那种方式都需要配置settings</p>
+</blockquote>
+<h4 id="setting配置"><a href="#setting配置" class="headerlink" title="setting配置"></a><strong>setting配置</strong></h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">REST_FRAMEWORK = &#123;</span><br><span class="line">    <span class="string">'DEFAULT_VERSION'</span>: <span class="string">'v1'</span>,            <span class="comment"># 默认版本</span></span><br><span class="line">    <span class="string">'ALLOWED_VERSIONS'</span>: [<span class="string">'v1'</span>, <span class="string">'v2'</span>],   <span class="comment"># 允许的版本</span></span><br><span class="line">    <span class="string">'VERSION_PARAM'</span>: <span class="string">'version'</span>          <span class="comment"># URL中获取值的key</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="基于url的get传参方式"><a href="#基于url的get传参方式" class="headerlink" title="基于url的get传参方式"></a>基于url的get传参方式</h4><blockquote>
+<p>/users?verson=v1</p>
+</blockquote>
+<p><strong>urls.py</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> web.views <span class="keyword">import</span> TestView</span><br><span class="line"></span><br><span class="line">urlpatterns = [</span><br><span class="line">    url(<span class="string">r'^test/'</span>, TestView.as_view(),name=<span class="string">'test'</span>), <span class="comment">#不同的方式此处路由方式不同</span></span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<p>Views.py</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python</span></span><br><span class="line"><span class="comment"># -*- coding:utf-8 -*-</span></span><br><span class="line"><span class="keyword">from</span> rest_framework.views <span class="keyword">import</span> APIView</span><br><span class="line"><span class="keyword">from</span> rest_framework.response <span class="keyword">import</span> Response</span><br><span class="line"><span class="keyword">from</span> rest_framework.versioning <span class="keyword">import</span> QueryParameterVersioning</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">TestView</span><span class="params">(APIView)</span>:</span></span><br><span class="line">    versioning_class = QueryParameterVersioning  <span class="comment">#不同的方式此处引用的类不通</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get</span><span class="params">(self, request, *args, **kwargs)</span>:</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># 获取版本</span></span><br><span class="line">        print(request.version)</span><br><span class="line">        <span class="comment"># 获取版本管理的类</span></span><br><span class="line">        print(request.versioning_scheme)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 反向生成URL</span></span><br><span class="line">        reverse_url = request.versioning_scheme.reverse(<span class="string">'test'</span>, request=request)</span><br><span class="line">        print(reverse_url)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> Response(<span class="string">'GET请求，响应内容'</span>)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">post</span><span class="params">(self, request, *args, **kwargs)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> Response(<span class="string">'POST请求，响应内容'</span>)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">put</span><span class="params">(self, request, *args, **kwargs)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> Response(<span class="string">'PUT请求，响应内容'</span>)</span><br></pre></td></tr></table></figure>
+
+<h4 id="基于url的正则方式"><a href="#基于url的正则方式" class="headerlink" title="基于url的正则方式"></a>基于url的正则方式</h4><blockquote>
+<p>/v1/users/</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># urls.py</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> web.views <span class="keyword">import</span> TestView</span><br><span class="line"></span><br><span class="line">urlpatterns = [</span><br><span class="line">    url(<span class="string">r'^(?P&lt;version&gt;[v1|v2]+)/test/'</span>, TestView.as_view(), name=<span class="string">'test'</span>),</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line"><span class="comment"># views.py</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> rest_framework.views <span class="keyword">import</span> APIView</span><br><span class="line"><span class="keyword">from</span> rest_framework.response <span class="keyword">import</span> Response</span><br><span class="line"><span class="keyword">from</span> rest_framework.versioning <span class="keyword">import</span> URLPathVersioning</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">TestView</span><span class="params">(APIView)</span>:</span></span><br><span class="line">    versioning_class = URLPathVersioning</span><br></pre></td></tr></table></figure>
+
+<h4 id="基于主机名方法"><a href="#基于主机名方法" class="headerlink" title="基于主机名方法"></a>基于主机名方法</h4><blockquote>
+<p>v1.example.com</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># urls.py</span></span><br><span class="line"><span class="keyword">from</span> web.views <span class="keyword">import</span> TestView</span><br><span class="line"></span><br><span class="line">urlpatterns = [</span><br><span class="line">    url(<span class="string">r'^test/'</span>, TestView.as_view(), name=<span class="string">'test'</span>),</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line"><span class="comment"># views.py</span></span><br><span class="line"><span class="keyword">from</span> rest_framework.views <span class="keyword">import</span> APIView</span><br><span class="line"><span class="keyword">from</span> rest_framework.response <span class="keyword">import</span> Response</span><br><span class="line"><span class="keyword">from</span> rest_framework.versioning <span class="keyword">import</span> URLPathVersioning</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">TestView</span><span class="params">(APIView)</span>:</span></span><br><span class="line">    versioning_class = HostNameVersioning</span><br></pre></td></tr></table></figure>
+
+<h4 id="基于django路由系统的namespace"><a href="#基于django路由系统的namespace" class="headerlink" title="基于django路由系统的namespace"></a>基于django路由系统的namespace</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># urls.py</span></span><br><span class="line"><span class="keyword">from</span> django.conf.urls <span class="keyword">import</span> url, include</span><br><span class="line"><span class="keyword">from</span> web.views <span class="keyword">import</span> TestView</span><br><span class="line"></span><br><span class="line">urlpatterns = [</span><br><span class="line">    url(<span class="string">r'^v1/'</span>, ([</span><br><span class="line">                      url(<span class="string">r'test/'</span>, TestView.as_view(), name=<span class="string">'test'</span>),</span><br><span class="line">                  ], <span class="literal">None</span>, <span class="string">'v1'</span>)),</span><br><span class="line">    url(<span class="string">r'^v2/'</span>, ([</span><br><span class="line">                      url(<span class="string">r'test/'</span>, TestView.as_view(), name=<span class="string">'test'</span>),</span><br><span class="line">                  ], <span class="literal">None</span>, <span class="string">'v2'</span>)),</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line"><span class="comment"># views.py</span></span><br><span class="line"><span class="keyword">from</span> rest_framework.views <span class="keyword">import</span> APIView</span><br><span class="line"><span class="keyword">from</span> rest_framework.response <span class="keyword">import</span> Response</span><br><span class="line"><span class="keyword">from</span> rest_framework.versioning <span class="keyword">import</span> NamespaceVersioning</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">TestView</span><span class="params">(APIView)</span>:</span></span><br><span class="line">    versioning_class = NamespaceVersioning</span><br></pre></td></tr></table></figure>
+
+
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+          <div class="post-eof"></div>
+        
+      </footer>
+  </div>
+  
+  
+  
+  </article>
+
+    
+        <article itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block home">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/28/django_rest_framework_serializer/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Johny cai">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Johny的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+            
+            <a href="/2019/08/28/django_rest_framework_serializer/" class="post-title-link" itemprop="url">Django Rest Framework 序列操作</a>
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              
+                
+              
+
+              <time title="Created: 2019-08-28 09:10:14 / Modified: 16:53:18" itemprop="dateCreated datePublished" datetime="2019-08-28T09:10:14+08:00">2019-08-28</time>
+            </span>
+          
+            
+
+            
+          
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="Django-Rest-Framework-序列号组件"><a href="#Django-Rest-Framework-序列号组件" class="headerlink" title="Django Rest Framework 序列号组件"></a>Django Rest Framework 序列号组件</h2><h3 id="serializers是什么？"><a href="#serializers是什么？" class="headerlink" title="serializers是什么？"></a>serializers是什么？</h3><blockquote>
+<p>将复杂的数据结构，例如ORM中的QuerySet或者Model实例对象转换成Python内置的数据类型，从而进一步方便数据和json，xml等格式的数据进行交互。</p>
+</blockquote>
+<h3 id="serializers的作用"><a href="#serializers的作用" class="headerlink" title="serializers的作用"></a>serializers的作用</h3><blockquote>
+<p>1.将queryset与model实例等进行序列化，转化成json格式，返回给用户(api接口)。<br>2.将post与patch/put的上来的数据进行验证。<br>3.对post与patch/put数据进行处理。(后面的内容，将用patch表示put/patch更新，博主认为patch更贴近更新的说法)</p>
+</blockquote>
+<p>简单来说，针对get来说，serializers的作用体现在第一条</p>
+<p>但如果是其他请求，serializers能够发挥2,3条的作用！</p>
+<h3 id="常用的field"><a href="#常用的field" class="headerlink" title="常用的field"></a>常用的field</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">mobile = serializers.CharField(max_length=<span class="number">11</span>, min_length=<span class="number">11</span>)</span><br><span class="line">age = serializers.IntegerField(min_value=<span class="number">1</span>, max_value=<span class="number">100</span>)</span><br><span class="line"><span class="comment"># format可以设置时间的格式，下面例子会输出如:2018-3-20 12:10</span></span><br><span class="line">pay_time = serializers.DateTimeField(read_only=<span class="literal">True</span>,format=<span class="string">'%Y-%m-%d %H:%M'</span>)</span><br><span class="line">is_hot = serializers.BooleanField() <span class="comment"># 设置商品是否热销</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="HiddenField"><a href="#HiddenField" class="headerlink" title="HiddenField"></a>HiddenField</h4><blockquote>
+<p>HiddenField的值不依靠输入，而需要设置默认的值，不需要用户自己post数据过来，也不会显式返回给用户，最常用的就是user!! </p>
+<p>我们在收藏某件商品的时候，后台要获取到当前的用户；相当于前台只需要传递过来一个商品的ID即可；那么在后台我根据当前的登入用户和当前的商品ID即可判断用户是否收藏过该商品；这就是一个联合唯一主键的判断；这同样需要使用HiddenField</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 如果你的viewset含有post，那么你需要重载create方法，如果含有patch，那么就需要重载update方法</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ArticleSerializer</span><span class="params">(serializers.Serializer)</span>:</span></span><br><span class="line">    user = serializers.HiddenField(</span><br><span class="line">    default=serializers.CurrentUserDefault())</span><br><span class="line">    name = serializers.CharField(max_length=<span class="number">20</span>)</span><br><span class="line">    content = serializers.CharField()</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">create</span><span class="params">(self, validated_data)</span>:</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># 除了用户，其他数据可以从validated_data这个字典中获取</span></span><br><span class="line">        <span class="comment"># 注意，users在这里是放在上下文中的request，而不是直接的request</span></span><br><span class="line">        user = self.context[<span class="string">'request'</span>].user</span><br><span class="line">        name = validated_data[<span class="string">'name '</span>]</span><br><span class="line">        content = validated_data[<span class="string">'content '</span>]</span><br><span class="line">        <span class="keyword">return</span> Article.objects.create(**validated_data)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">update</span><span class="params">(self, instance, validated_data)</span>:</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># 更新的特别之处在于你已经获取到了这个对象instance</span></span><br><span class="line">        instance.name = validated_data.get(<span class="string">'name'</span>)</span><br><span class="line">        instance.content = validated_data.get(<span class="string">'content'</span>)</span><br><span class="line">        instance.save()</span><br><span class="line">        <span class="keyword">return</span> instance</span><br></pre></td></tr></table></figure>
+
+<h3 id="字段参数"><a href="#字段参数" class="headerlink" title="字段参数"></a>字段参数</h3><p>read_only：True表示不允许用户自己上传，只能用于api的输出。如果某个字段设置了read_only=True，那么就不需要进行数据验证，只会在返回时，将这个字段序列化后返回</p>
+<blockquote>
+<p>在用户进行购物的时候，用户post订单时，肯定会产生一个订单号，而这个订单号应该由后台逻辑完成，而不应该由用户post过来，如果不设置read_only=True，那么验证的时候就会报错。</p>
+<p>我们在网上购物时，支付时通常会产生支付状态，交易号，订单号，支付时间等字段，这些字段都应该设置为read_only=True，即这些字段都应该由后台产生然后返回给客户端；</p>
+</blockquote>
+<blockquote>
+<p>在用户提交订单的时候，我们在这里给用户新增一个字段，就是支付宝支付的URL<br>要设置为read_only=True，这样的话，就不能让用户端提交了，而是服务器端生成<br>返回给用户的</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">alipay_url = serializers.SerializerMethodField(read_only=<span class="literal">True</span>)</span><br></pre></td></tr></table></figure>
+
+<p>write_only: 与read_only对应;就是用户post过来的数据，后台服务器处理后不会再经过序列化后返回给客户端</p>
+<blockquote>
+<p>最常见的就是我们在使用手机注册的验证码和填写的密码。</p>
+</blockquote>
+<p>reuqired: 是否必填</p>
+<p>allow_null/allow_blank: 是否允许为NULL/空</p>
+<p>error_message: 出错时的提示信息</p>
+<p>label: 字段显示</p>
+<p>Help_text: 在指定字段增加一些提示文字，这两个字段作用于api页面比较有用 </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 示例</span></span><br><span class="line">code = serializers.CharField(required=<span class="literal">True</span>, write_only=<span class="literal">True</span>, label=<span class="string">"验证码"</span>, max_length=<span class="number">6</span>, min_length=<span class="number">6</span>,</span><br><span class="line">error_messages=&#123;</span><br><span class="line"><span class="string">"blank"</span>: <span class="string">"请输入验证码"</span>,</span><br><span class="line"><span class="string">"required"</span>: <span class="string">"请输入验证码"</span>, </span><br><span class="line"><span class="string">"max_length"</span>: <span class="string">"验证码格式错误"</span>,</span><br><span class="line"><span class="string">"min_length"</span>: <span class="string">"验证码格式错误"</span></span><br><span class="line">&#125;,</span><br><span class="line">help_text=<span class="string">"验证码"</span>)</span><br><span class="line"></span><br><span class="line">username = serializers.CharField(required=<span class="literal">True</span>, allow_blank=<span class="literal">False</span>, label=<span class="string">"用户名"</span>,</span><br><span class="line">validators=[UniqueValidator(queryset=User.objects.all(), message=<span class="string">"用户已经存在"</span>)])</span><br><span class="line"></span><br><span class="line"><span class="comment"># 同理我们也应该将password设置write_only参数，不让它返回回去，这样容易被截获</span></span><br><span class="line">password = serializers.CharField(</span><br><span class="line">style=&#123;<span class="string">'input_type'</span>: <span class="string">'password'</span>&#125;, help_text=<span class="string">"密码"</span>, label=<span class="string">"密码"</span>, write_only=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line">color_channel = serializers.ChoiceField(</span><br><span class="line">choices=[<span class="string">'red'</span>, <span class="string">'green'</span>, <span class="string">'blue'</span>],</span><br><span class="line">style=&#123;<span class="string">'base_template'</span>: <span class="string">'radio.html'</span>&#125;)</span><br></pre></td></tr></table></figure>
+
+<h4 id="Validation自定义验证逻辑"><a href="#Validation自定义验证逻辑" class="headerlink" title="Validation自定义验证逻辑"></a>Validation自定义验证逻辑</h4><p>field它能起到一定的验证作用，但很明显，它存在很大的局限性</p>
+<blockquote>
+<p>拿实际生产环境下的例子来说，光针对用户输入的手机号码，我们在后端就需要进行验证</p>
+<p>例如该手机号码是否注册，手机号码是否合法(例如满足手机号码的正则表达式，以及要验证该手机号码向后台发送请求验证短信的频率等等</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">SmsSerializer</span><span class="params">(serializers.Serializer)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    为什不用ModelSerializer来完成手机号码的验证呢？</span></span><br><span class="line"><span class="string">    因为VerifyCode中还有一个字段是手机验证码字段，直接使用ModelSerializer来验证会报错</span></span><br><span class="line"><span class="string">    因为ModelSerializer会自动生成VerifyCode模型中的所有字段；但是</span></span><br><span class="line"><span class="string">    我们传递过来的就是一个手机号，判断它是否是合法的</span></span><br><span class="line"><span class="string">    因此使用Serializer来自定义合法性校验规则，相当于就是钩子函数</span></span><br><span class="line"><span class="string">    单独对手机号码进行验证</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line"></span><br><span class="line">	mobile = serializers.CharField(max_length=<span class="number">11</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 使用validate_字段名(self, 字段名)：要么返回字段，要么抛出异常</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">validate_mobile</span><span class="params">(self, mobile)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        验证手机号码，记住这里的validate_字段名一定要是数据模型中的字段</span></span><br><span class="line"><span class="string">        :param attrs:</span></span><br><span class="line"><span class="string">        :return:</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        <span class="comment"># 手机号码是否注册，查询User表即可</span></span><br><span class="line">        <span class="keyword">if</span> User.objects.filter(mobile=mobile).exists():</span><br><span class="line">            <span class="keyword">raise</span> serializers.ValidationError(<span class="string">"用户已经存在"</span>)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 验证手机号码是否合法，这部分应该是在前端做的，当然后台也需要进行验证</span></span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> re.match(REGEX_MOBILE, mobile):</span><br><span class="line">            <span class="keyword">raise</span> serializers.ValidationError(<span class="string">"手机号码格式不正确"</span>)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 验证发送频率，如果不做，用户可以一直向后台发送，请求验证码；</span></span><br><span class="line">        <span class="comment"># 会造成很大的压力，限制一分钟只能发送一次 7-8 09:00</span></span><br><span class="line">        one_minute_ago = datetime.now() - timedelta(hours=<span class="number">0</span>, minutes=<span class="number">1</span>, seconds=<span class="number">0</span>)</span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        如果添加时间在一分钟以内，它肯定是大于你一分钟之前的时间的</span></span><br><span class="line"><span class="string">        如果这条记录存在</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        <span class="keyword">if</span> VerifyCode.objects.filter(add_time__gt=one_minute_ago, mobile=mobile):</span><br><span class="line">            <span class="keyword">raise</span> serializers.ValidationError(<span class="string">"抱歉，一分钟只能发送一次"</span>)</span><br><span class="line">    	<span class="comment"># 如果验证通过，我就将这个mobile返回去，这里一定要有一个返回</span></span><br><span class="line">        <span class="keyword">return</span> mobile</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>订单号的生成，我们可以在这步生成一个订单号，然后添加到attrs这个字典中</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">OrderSerializer</span><span class="params">(serializers.ModelSerializer)</span>:</span></span><br><span class="line">	user = serializers.HiddenField(</span><br><span class="line">	default=serializers.CurrentUserDefault())</span><br><span class="line"></span><br><span class="line">	pay_status = serializers.CharField(read_only=<span class="literal">True</span>)</span><br><span class="line">	trade_no = serializers.CharField(read_only=<span class="literal">True</span>)</span><br><span class="line">	order_sn = serializers.CharField(read_only=<span class="literal">True</span>)</span><br><span class="line">	pay_time = serializers.DateTimeField(read_only=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    在用户提交订单的时候，我们在这里给用户新增一个字段，就是支付宝支付的URL</span></span><br><span class="line"><span class="string">    要设置为read_only=True，这样的话，就不能让用户端提交了，而是服务器端生成</span></span><br><span class="line"><span class="string">    返回给用户的</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line"></span><br><span class="line">	alipay_url = serializers.SerializerMethodField(read_only=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">get_alipay_url</span><span class="params">(self, obj)</span>:</span> <span class="comment"># obj就是OrderSerializer对象</span></span><br><span class="line">        alipay = AliPay(</span><br><span class="line">        appid=<span class="string">"2019081200490227"</span>, <span class="comment"># 沙箱环境中可以找到</span></span><br><span class="line">        app_notify_url=<span class="string">"http://47.92.87.172:8000/alipay/return/"</span>,</span><br><span class="line">        app_private_key_path=private_key_path, <span class="comment"># 个人私钥</span></span><br><span class="line">        alipay_public_key_path=ali_pub_key_path, <span class="comment"># 支付宝的公钥，验证支付宝回传消息使用，不是你自己的公钥,</span></span><br><span class="line">        debug=<span class="literal">True</span>, <span class="comment"># 默认False,上线的时候修改为False即可</span></span><br><span class="line">        return_url=<span class="string">"http://47.92.87.172:8000/alipay/return/"</span></span><br><span class="line">        )</span><br><span class="line"></span><br><span class="line">        url = alipay.direct_pay(</span><br><span class="line">        <span class="comment"># 一个订单里面可能有多个商品，因此subject</span></span><br><span class="line">        <span class="comment"># 不适合使用商品名称</span></span><br><span class="line">        subject=obj.order_sn,</span><br><span class="line">        out_trade_no=obj.order_sn,</span><br><span class="line">        total_amount=obj.order_mount,</span><br><span class="line">        )</span><br><span class="line">        re_url = <span class="string">"https://openapi.alipaydev.com/gateway.do?&#123;data&#125;"</span>.format(data=url)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> re_url</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">generate_order_sn</span><span class="params">(self)</span>:</span></span><br><span class="line"></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        后台系统生成订单号</span></span><br><span class="line"><span class="string">        这个是系统后台生成的：</span></span><br><span class="line"><span class="string">        当前时间+userId+随机数</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line"></span><br><span class="line">        random_ins = Random()</span><br><span class="line">        order_sn = <span class="string">"&#123;time_str&#125;&#123;user_id&#125;&#123;random_num&#125;"</span>.format(time_str=time.strftime(<span class="string">"%Y%m%d%H%M%S"</span>),</span><br><span class="line">        user_id=self.context[<span class="string">"request"</span>].user.id,</span><br><span class="line">        random_num=random_ins.randint(<span class="number">1000</span>, <span class="number">9999</span>))</span><br><span class="line">        <span class="keyword">return</span> order_sn</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">validate</span><span class="params">(self, attrs)</span>:</span> <span class="comment"># 全局钩子函数</span></span><br><span class="line">        attrs[<span class="string">"order_sn"</span>] = self.generate_order_sn()</span><br><span class="line">        <span class="keyword">return</span> attrs</span><br><span class="line"></span><br><span class="line">        <span class="class"><span class="keyword">class</span> <span class="title">Meta</span>:</span></span><br><span class="line">            model = OrderInfo</span><br><span class="line">            fields = <span class="string">"__all__"</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">#这个方法运用在modelserializer中，可以剔除掉write_only的字段，这个字段只验证，但不存在于指定的model当中，即不能save( )，可以在这delete掉；例如短信验证码验证完毕后就可以删除了：</span></span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">validate</span><span class="params">(self, attrs)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        判断完毕后删除验证码，因为没有什么用了</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        attrs[<span class="string">"mobile"</span>] = attrs[<span class="string">"username"</span>]</span><br><span class="line">        <span class="keyword">del</span> attrs[<span class="string">"code"</span>]</span><br><span class="line">        <span class="keyword">return</span> attrs</span><br></pre></td></tr></table></figure>
+
+<h4 id="Validators"><a href="#Validators" class="headerlink" title="Validators"></a>Validators</h4><blockquote>
+<p>validators可以直接作用于某个字段，这个时候，它与单独的validate作用差不多；当然，drf提供的validators还有很好的功能：UniqueValidator，UniqueTogetherValidator等；</p>
+<p>UniqueValidator: 指定某一个对象是唯一的，如，用户名只能存在唯一：</p>
+<p>UniqueTogetherValidator: 联合唯一，例如我们需要判断用户是否收藏了某个商品，前端只需要传递过来一个商品ID即可。这个时候就不是像上面那样单独作用于某个字段，而是需要进行联合唯一的判断，即用户ID和商品ID；此时我们需要在Meta中设置。</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">UserFavSerializer</span><span class="params">(serializers.ModelSerializer)</span>:</span></span><br><span class="line">	<span class="comment"># 获取到当前用户</span></span><br><span class="line">	user = serializers.HiddenField(</span><br><span class="line">	default=serializers.CurrentUserDefault()</span><br><span class="line">	)</span><br><span class="line"></span><br><span class="line">	<span class="class"><span class="keyword">class</span> <span class="title">Meta</span>:</span></span><br><span class="line">        model = UserFav</span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        我们需要获取的是当前登入的user</span></span><br><span class="line"><span class="string">        以后要取消收藏，只需要获取这里的id即可</span></span><br><span class="line"><span class="string">        UniqueTogetherValidator作用在多个字段之上</span></span><br><span class="line"><span class="string">        因为是联合唯一主键</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        validators = [</span><br><span class="line">        UniqueTogetherValidator(</span><br><span class="line">        	queryset=UserFav.objects.all(),</span><br><span class="line">        	fields=(<span class="string">'user'</span>, <span class="string">'goods'</span>),</span><br><span class="line">       		message=<span class="string">"已经收藏"</span></span><br><span class="line">        	)</span><br><span class="line">        ]</span><br><span class="line">        fields = (<span class="string">"user"</span>, <span class="string">"goods"</span>, <span class="string">"id"</span>)</span><br></pre></td></tr></table></figure>
+
+<h3 id="ModelSerializer"><a href="#ModelSerializer" class="headerlink" title="ModelSerializer"></a>ModelSerializer</h3><blockquote>
+<p>讲了很多Serializer的，但还是强烈建议使用ModelSerializer，因为在大多数情况下，我们都是基于model字段去开发。</p>
+<p>Why：</p>
+<p>ModelSerializer已经重载了create与update方法，它能够满足将post或patch上来的数据进行进行直接地创建与更新，除非有额外需求，那么就可以重载create与update方法。<br>ModelSerializer在Meta中设置fields字段，系统会自动进行映射，省去每个字段再写一个field。</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">UserDetailSerializer</span><span class="params">(serializers.ModelSerializer)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    用户详情序列化</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    <span class="class"><span class="keyword">class</span> <span class="title">Meta</span>:</span></span><br><span class="line">        model = User</span><br><span class="line">        fields = (<span class="string">"name"</span>, <span class="string">"gender"</span>, <span class="string">"birthday"</span>, <span class="string">"email"</span>, <span class="string">"mobile"</span>)</span><br><span class="line">        <span class="comment"># fields = '__all__': 表示所有字段</span></span><br><span class="line">        <span class="comment"># exclude = ('add_time',): 除去指定的某些字段</span></span><br><span class="line">        <span class="comment"># 这三种方式，存在一个即可</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="ModelSerializer需要解决的2个问题"><a href="#ModelSerializer需要解决的2个问题" class="headerlink" title="ModelSerializer需要解决的2个问题"></a>ModelSerializer需要解决的2个问题</h4><blockquote>
+<p>某个字段不属于指定model，它是write_only，需要用户传进来，但我们不能对它进行save( )，因为ModelSerializer是基于Model，这个字段在Model中没有对应，这个时候，我们需要重载validate！ </p>
+</blockquote>
+<p>如在用户注册时，我们需要填写验证码，这个验证码只需要验证，不需要保存到用户这个Model中</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">validate</span><span class="params">(self, attrs)</span>:</span></span><br><span class="line">　　<span class="keyword">del</span> attrs[<span class="string">"code"</span>]</span><br><span class="line">　　<span class="keyword">return</span> attrs</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>某个字段不属于指定model，它是read_only，只需要将它序列化传递给用户，但是在这个model中，没有这个字段！我们需要用到SerializerMethodField。</p>
+</blockquote>
+<p>假设需要返回用户加入这个网站多久了，不可能维持这样加入的天数这样一个数据，一般会记录用户加入的时间点，然后当用户获取这个数据，我们再计算返回给它。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">UserSerializer</span><span class="params">(serializers.ModelSerializer)</span>:</span> </span><br><span class="line">    days_since_joined = serializers.SerializerMethodField()</span><br><span class="line">    <span class="comment"># 方法写法：get_ + 字段</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get_days_since_joined</span><span class="params">(self, obj)</span>:</span></span><br><span class="line">    <span class="comment"># obj指这个model的对象</span></span><br><span class="line">        <span class="keyword">return</span> (now() - obj.date_joined).days</span><br><span class="line">    </span><br><span class="line">    <span class="class"><span class="keyword">class</span> <span class="title">Meta</span>:</span></span><br><span class="line">        model = User</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>ModelSerializer需要解决的第二个问题中，其实还有一种情况，就是某个字段属于指定model，但不能获取到相关数据。 </p>
+</blockquote>
+<p>例如，编程语言–&gt;python–&gt;python入门学习课程，编程语言与python属于类别，另外一个属于课程，编程语言类别是python类别的一个外键，而且属于同一个model</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">parent_category = models.ForeignKey(<span class="string">'self'</span>, null=<span class="literal">True</span>, blank=<span class="literal">True</span>, verbose_name=<span class="string">'父类目别'</span>,related_name=<span class="string">'sub_cat'</span>)</span><br></pre></td></tr></table></figure>
+
+<p>现在获取编程语言下的课程，显然无法直接获取到python入门学习这个课程，因为它们两没有外键关系。SerializerMethodField( )也可以解决这个问题，只要在自定义的方法中实现相关的逻辑即可！</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">courses = SerializerMethodField()</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_courses</span><span class="params">(self, obj)</span>:</span></span><br><span class="line">	all_courses = Course.objects.filter(category__parent_category_id=obj.id)</span><br><span class="line">	courses_serializer = CourseSerializer(all_course, many=<span class="literal">True</span>, context=&#123;<span class="string">'request'</span>: self.context[<span class="string">'request'</span>]&#125;)</span><br><span class="line">	<span class="keyword">return</span> courses_serializer.data</span><br></pre></td></tr></table></figure>
+
+<h4 id="关于外键的serializers"><a href="#关于外键的serializers" class="headerlink" title="关于外键的serializers"></a>关于外键的serializers</h4><p>假设现在有一门课python入门教学(course)，它的类别是python(catogory)</p>
+<blockquote>
+<p>以下两种都是外键正向获取</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">category = serializers.PrimaryKeyRelatedField(queryset=CourseCategory.objects.all(), required=<span class="literal">True</span>)</span><br><span class="line"><span class="comment"># 使用 ModelSerializer类 可以直接映射</span></span><br><span class="line">category = CourseCategorySerializer()</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>外键反向获取</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Course</span><span class="params">(model.Model)</span>:</span></span><br><span class="line">    <span class="comment"># 外键设置related_name</span></span><br><span class="line">	category = models.ForeignKey(CourseCategory, related_name=<span class="string">'courses'</span>)</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>反向获取课程，需要通过related_name</p>
+<p>一对多，一个类别下有多个课程，一定要设定many=True</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">courses = CourseSerializer(many=<span class="literal">True</span>)</span><br></pre></td></tr></table></figure>
+
+
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+          <div class="post-eof"></div>
+        
+      </footer>
+  </div>
+  
+  
+  
+  </article>
+
+    
         <article itemscope itemtype="http://schema.org/Article">
   
   
@@ -265,7 +540,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2019-08-27 18:08:26" itemprop="dateModified" datetime="2019-08-27T18:08:26+08:00">2019-08-27</time>
+                <time title="Modified: 2019-08-27 19:58:02" itemprop="dateModified" datetime="2019-08-27T19:58:02+08:00">2019-08-27</time>
               </span>
             
           
@@ -473,7 +748,7 @@
 </blockquote>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">models.Author.objects.annotate(sum_price=Sum(<span class="string">'book__price'</span>)).values(<span class="string">'name'</span>,<span class="string">'sum_price'</span>)</span><br></pre></td></tr></table></figure>
 
-<h3 id="F查询和Q查询"><a href="#F查询和Q查询" class="headerlink" title="F查询和Q查询"></a>F查询和Q查询</h3><h4 id="F查询"><a href="#F查询" class="headerlink" title="F查询"></a><strong>F查询</strong></h4><p>Django提供F()方法来做这样的比较</p>
+<h3 id="F查询和Q查询"><a href="#F查询和Q查询" class="headerlink" title="F查询和Q查询"></a>F查询和Q查询</h3><h4 id="F查询"><a href="#F查询" class="headerlink" title="F查询"></a>F查询</h4><p>Django提供F()方法来做这样的比较</p>
 <p>F()的实例可以在查询中引用字段，来比较同一个model实例中两个不同字段的值。</p>
 <hr>
 <blockquote>
@@ -486,13 +761,12 @@
 </blockquote>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># save 方法增加数据</span></span><br><span class="line">author = Author.objects.get(id=<span class="number">5</span>)</span><br><span class="line">author.name=<span class="string">'jony'</span></span><br><span class="line">author.save()</span><br><span class="line"> </span><br><span class="line"><span class="comment"># update 方法更新数据</span></span><br><span class="line">Publisher.objects.filter(id=<span class="number">5</span>).update(name=<span class="string">'American publisher'</span>) <span class="comment">#不能用get(id=2)</span></span><br></pre></td></tr></table></figure>
 
-<p>注意：</p>
-<p>&lt;1&gt; update方法更新数据修改不能用get的原因是：update是QuerySet对象的方法，get返回的是一个具体model对象，它没有update方法</p>
+<p>注意：update方法更新数据修改不能用get的原因是：update是QuerySet对象的方法，get返回的是一个具体model对象，它没有update方法</p>
 <p>而filter返回的是一个QuerySet对象(filter里面的条件可能有多个条件符合，比如name＝’jony’,可能有两个name＝’jony’的行数据)。</p>
-<p>&lt;2&gt;<strong>models模型的save()方法，这个方法会更新一行里的所有列。 而某些情况下，我们只需要更新行里的某几列，update效率更高。</strong> </p>
+<p><strong>models模型的save()方法，这个方法会更新一行里的所有列。 而某些情况下，我们只需要更新行里的某几列，update效率更高。</strong> </p>
 <p>此外，update()方法对于任何结果集（QuerySet）均有效，这意味着你可以同时更新多条记录update()方法会返回一个整型数值，表示受影响的记录条数。</p>
 <p>注意，这里因为update返回的是一个整形，所以没法用query属性；对于每次创建一个对象，想显示对应的raw sql，需要在settings加上日志记录部分</p>
-<p><strong>Q查询：</strong><code>filter()</code> 等方法中的关键字参数查询都是一起进行“AND” 的。 如果你需要执行更复杂的查询（例如<code>OR</code> 语句），你可以使用<code>Q 对象</code>。</p>
+<h4 id="Q查询"><a href="#Q查询" class="headerlink" title="Q查询"></a>Q查询</h4><p><code>filter()</code> 等方法中的关键字参数查询都是一起进行“AND” 的。 如果你需要执行更复杂的查询（例如<code>OR</code> 语句），你可以使用<code>Q 对象</code>。</p>
 <blockquote>
 <p>查询id大于1并且评论数大于100的书</p>
 </blockquote>
@@ -501,17 +775,17 @@
 <blockquote>
 <p>查询评论数大于100或者阅读数小于200的书</p>
 </blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">print(models.Book.objects.filter(Q(commentNum__gt=100)|Q(readNum__lt=200)))</span><br><span class="line">Q 对象可以使用&amp; 和| 操作符组合起来。当一个操作符在两个Q 对象上使用时，它产生一个新的Q 对象。</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Q 对象可以使用&amp; 和| 操作符组合起来。当一个操作符在两个Q 对象上使用时，它产生一个新的Q 对象。 </span></span><br><span class="line">models.Book.objects.filter(Q(commentNum__gt=<span class="number">100</span>)|Q(readNum__lt=<span class="number">200</span>))</span><br></pre></td></tr></table></figure>
 
 <blockquote>
 <p>查询年份等于2017年或者价格大于200的书</p>
 </blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">print(models.Book.objects.filter(Q(publishDdata__year=2017)|Q(price__gt=200)))</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">models.Book.objects.filter(Q(publishDdata__year=<span class="number">2017</span>)|Q(price__gt=<span class="number">200</span>))</span><br></pre></td></tr></table></figure>
 
 <blockquote>
 <p>查询年份不是2017年或者价格大于200的书</p>
 </blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">print(models.Book.objects.filter(~Q(publishDdata__year=2017)&amp;Q(price__gt=200)))</span><br><span class="line">注意：</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">models.Book.objects.filter(~Q(publishDdata__year=<span class="number">2017</span>)&amp;Q(price__gt=<span class="number">200</span>))</span><br></pre></td></tr></table></figure>
 
 <blockquote>
 <p>查询函数可以混合使用<code>Q 对象</code>和关键字参数。所有提供给查询函数的参数（关键字参数或<code>Q</code> 对象）都将”AND”在一起。但是，如果出现<code>Q</code> 对象，它必须位于所有关键字参数的前面。例如：</p>
@@ -642,87 +916,6 @@
   </article>
 
     
-        <article itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block home">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/09/hello-world/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Johny cai">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Johny的博客">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-            
-            <a href="/2019/08/09/hello-world/" class="post-title-link" itemprop="url">Hello World</a>
-          
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              
-                
-              
-
-              <time title="Created: 2019-08-09 12:19:58" itemprop="dateCreated datePublished" datetime="2019-08-09T12:19:58+08:00">2019-08-09</time>
-            </span>
-          
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
-
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-          <div class="post-eof"></div>
-        
-      </footer>
-  </div>
-  
-  
-  
-  </article>
-
-    
   </div>
 
   
@@ -769,7 +962,7 @@
         
           <a href="/archives/">
         
-          <span class="site-state-item-count">2</span>
+          <span class="site-state-item-count">3</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>

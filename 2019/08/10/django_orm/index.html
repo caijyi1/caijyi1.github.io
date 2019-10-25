@@ -62,7 +62,7 @@
 <meta property="og:site_name" content="Johny的博客">
 <meta property="og:description" content="Django ORM操作最常用的ORM方法   方法 描述     all() 返回所有结果 返回QuerySet对象   get(**kwargs) 返回与所给筛选条件相匹配的对象，返回结果有且只有一个，如果符合筛选条件的对象超过一个或者没有都会抛出错误 返回具体对象   filter(**kwargs) 它包含了与所给筛选条件相匹配的对象 返回QuerySet对象   exclude(**kw">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-08-27T10:08:26.484Z">
+<meta property="og:updated_time" content="2019-08-27T11:58:02.272Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Django ORM 操作">
 <meta name="twitter:description" content="Django ORM操作最常用的ORM方法   方法 描述     all() 返回所有结果 返回QuerySet对象   get(**kwargs) 返回与所给筛选条件相匹配的对象，返回结果有且只有一个，如果符合筛选条件的对象超过一个或者没有都会抛出错误 返回具体对象   filter(**kwargs) 它包含了与所给筛选条件相匹配的对象 返回QuerySet对象   exclude(**kw">
@@ -164,33 +164,11 @@
       
       
         
-        <li class="menu-item menu-item-about">
-      
-    
-
-    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>About</a>
-
-  </li>
-      
-      
-      
-        
         <li class="menu-item menu-item-tags">
       
     
 
     <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>Tags</a>
-
-  </li>
-      
-      
-      
-        
-        <li class="menu-item menu-item-categories">
-      
-    
-
-    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>Categories</a>
 
   </li>
       
@@ -270,7 +248,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2019-08-27 18:08:26" itemprop="dateModified" datetime="2019-08-27T18:08:26+08:00">2019-08-27</time>
+                <time title="Modified: 2019-08-27 19:58:02" itemprop="dateModified" datetime="2019-08-27T19:58:02+08:00">2019-08-27</time>
               </span>
             
           
@@ -478,7 +456,7 @@
 </blockquote>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">models.Author.objects.annotate(sum_price=Sum(<span class="string">'book__price'</span>)).values(<span class="string">'name'</span>,<span class="string">'sum_price'</span>)</span><br></pre></td></tr></table></figure>
 
-<h3 id="F查询和Q查询"><a href="#F查询和Q查询" class="headerlink" title="F查询和Q查询"></a>F查询和Q查询</h3><h4 id="F查询"><a href="#F查询" class="headerlink" title="F查询"></a><strong>F查询</strong></h4><p>Django提供F()方法来做这样的比较</p>
+<h3 id="F查询和Q查询"><a href="#F查询和Q查询" class="headerlink" title="F查询和Q查询"></a>F查询和Q查询</h3><h4 id="F查询"><a href="#F查询" class="headerlink" title="F查询"></a>F查询</h4><p>Django提供F()方法来做这样的比较</p>
 <p>F()的实例可以在查询中引用字段，来比较同一个model实例中两个不同字段的值。</p>
 <hr>
 <blockquote>
@@ -491,13 +469,12 @@
 </blockquote>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># save 方法增加数据</span></span><br><span class="line">author = Author.objects.get(id=<span class="number">5</span>)</span><br><span class="line">author.name=<span class="string">'jony'</span></span><br><span class="line">author.save()</span><br><span class="line"> </span><br><span class="line"><span class="comment"># update 方法更新数据</span></span><br><span class="line">Publisher.objects.filter(id=<span class="number">5</span>).update(name=<span class="string">'American publisher'</span>) <span class="comment">#不能用get(id=2)</span></span><br></pre></td></tr></table></figure>
 
-<p>注意：</p>
-<p>&lt;1&gt; update方法更新数据修改不能用get的原因是：update是QuerySet对象的方法，get返回的是一个具体model对象，它没有update方法</p>
+<p>注意：update方法更新数据修改不能用get的原因是：update是QuerySet对象的方法，get返回的是一个具体model对象，它没有update方法</p>
 <p>而filter返回的是一个QuerySet对象(filter里面的条件可能有多个条件符合，比如name＝’jony’,可能有两个name＝’jony’的行数据)。</p>
-<p>&lt;2&gt;<strong>models模型的save()方法，这个方法会更新一行里的所有列。 而某些情况下，我们只需要更新行里的某几列，update效率更高。</strong> </p>
+<p><strong>models模型的save()方法，这个方法会更新一行里的所有列。 而某些情况下，我们只需要更新行里的某几列，update效率更高。</strong> </p>
 <p>此外，update()方法对于任何结果集（QuerySet）均有效，这意味着你可以同时更新多条记录update()方法会返回一个整型数值，表示受影响的记录条数。</p>
 <p>注意，这里因为update返回的是一个整形，所以没法用query属性；对于每次创建一个对象，想显示对应的raw sql，需要在settings加上日志记录部分</p>
-<p><strong>Q查询：</strong><code>filter()</code> 等方法中的关键字参数查询都是一起进行“AND” 的。 如果你需要执行更复杂的查询（例如<code>OR</code> 语句），你可以使用<code>Q 对象</code>。</p>
+<h4 id="Q查询"><a href="#Q查询" class="headerlink" title="Q查询"></a>Q查询</h4><p><code>filter()</code> 等方法中的关键字参数查询都是一起进行“AND” 的。 如果你需要执行更复杂的查询（例如<code>OR</code> 语句），你可以使用<code>Q 对象</code>。</p>
 <blockquote>
 <p>查询id大于1并且评论数大于100的书</p>
 </blockquote>
@@ -506,17 +483,17 @@
 <blockquote>
 <p>查询评论数大于100或者阅读数小于200的书</p>
 </blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">print(models.Book.objects.filter(Q(commentNum__gt=100)|Q(readNum__lt=200)))</span><br><span class="line">Q 对象可以使用&amp; 和| 操作符组合起来。当一个操作符在两个Q 对象上使用时，它产生一个新的Q 对象。</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Q 对象可以使用&amp; 和| 操作符组合起来。当一个操作符在两个Q 对象上使用时，它产生一个新的Q 对象。 </span></span><br><span class="line">models.Book.objects.filter(Q(commentNum__gt=<span class="number">100</span>)|Q(readNum__lt=<span class="number">200</span>))</span><br></pre></td></tr></table></figure>
 
 <blockquote>
 <p>查询年份等于2017年或者价格大于200的书</p>
 </blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">print(models.Book.objects.filter(Q(publishDdata__year=2017)|Q(price__gt=200)))</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">models.Book.objects.filter(Q(publishDdata__year=<span class="number">2017</span>)|Q(price__gt=<span class="number">200</span>))</span><br></pre></td></tr></table></figure>
 
 <blockquote>
 <p>查询年份不是2017年或者价格大于200的书</p>
 </blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">print(models.Book.objects.filter(~Q(publishDdata__year=2017)&amp;Q(price__gt=200)))</span><br><span class="line">注意：</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">models.Book.objects.filter(~Q(publishDdata__year=<span class="number">2017</span>)&amp;Q(price__gt=<span class="number">200</span>))</span><br></pre></td></tr></table></figure>
 
 <blockquote>
 <p>查询函数可以混合使用<code>Q 对象</code>和关键字参数。所有提供给查询函数的参数（关键字参数或<code>Q</code> 对象）都将”AND”在一起。但是，如果出现<code>Q</code> 对象，它必须位于所有关键字参数的前面。例如：</p>
@@ -636,6 +613,23 @@
     
         
       
+        <div id="reward-container">
+  <div>坚持原创技术分享，您的支持将鼓励我继续创作！.</div>
+  <button id="reward-button" disable="enable" onclick="var qr = document.getElementById(&quot;qr&quot;); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    Donate
+  </button>
+  <div id="qr" style="display: none;">
+        
+      
+      <div style="display: inline-block">
+        <img src="/images/WechatIMG20.jpeg" alt="Johny cai WeChat Pay">
+        <p>WeChat Pay</p>
+      </div>
+
+  </div>
+</div>
+
+      
 
       <footer class="post-footer">
           
@@ -653,15 +647,15 @@
           <div class="post-nav">
             <div class="post-nav-next post-nav-item">
               
-                <a href="/2019/08/09/hello-world/" rel="next" title="Hello World">
-                  <i class="fa fa-chevron-left"></i> Hello World
-                </a>
-              
             </div>
 
             <span class="post-nav-divider"></span>
 
             <div class="post-nav-prev post-nav-item">
+              
+                <a href="/2019/08/28/django_rest_framework_serializer/" rel="prev" title="Django Rest Framework 序列操作">
+                  Django Rest Framework 序列操作 <i class="fa fa-chevron-right"></i>
+                </a>
               
             </div>
           </div>
@@ -710,7 +704,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Django-ORM操作"><span class="nav-number">1.</span> <span class="nav-text">Django ORM操作</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#最常用的ORM方法"><span class="nav-number">1.0.1.</span> <span class="nav-text">最常用的ORM方法</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#单表查询之神奇的双下划线"><span class="nav-number">1.1.</span> <span class="nav-text">单表查询之神奇的双下划线</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#外键操作"><span class="nav-number">1.2.</span> <span class="nav-text">外键操作</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#正向查找：多对一（设置了foreignKey一方开始查找另一表）"><span class="nav-number">1.2.1.</span> <span class="nav-text">正向查找：多对一（设置了foreignKey一方开始查找另一表）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#反向查找：一对多"><span class="nav-number">1.2.2.</span> <span class="nav-text">反向查找：一对多</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#多表查询之ManyToManyField"><span class="nav-number">1.3.</span> <span class="nav-text">多表查询之ManyToManyField</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#聚合查询和分组查询"><span class="nav-number">1.4.</span> <span class="nav-text">聚合查询和分组查询</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#F查询和Q查询"><span class="nav-number">1.5.</span> <span class="nav-text">F查询和Q查询</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#F查询"><span class="nav-number">1.5.1.</span> <span class="nav-text">F查询</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ORM表自关联"><span class="nav-number">1.6.</span> <span class="nav-text">ORM表自关联</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#创建自关联表-一对多情景"><span class="nav-number">1.6.1.</span> <span class="nav-text">创建自关联表(一对多情景)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#多对多表自关联"><span class="nav-number">1.6.2.</span> <span class="nav-text">多对多表自关联</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Django终端打印SQL语句"><span class="nav-number">1.7.</span> <span class="nav-text">Django终端打印SQL语句</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#在Python脚本中调用Django环境"><span class="nav-number">1.8.</span> <span class="nav-text">在Python脚本中调用Django环境</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Django-ORM操作"><span class="nav-number">1.</span> <span class="nav-text">Django ORM操作</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#最常用的ORM方法"><span class="nav-number">1.0.1.</span> <span class="nav-text">最常用的ORM方法</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#单表查询之神奇的双下划线"><span class="nav-number">1.1.</span> <span class="nav-text">单表查询之神奇的双下划线</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#外键操作"><span class="nav-number">1.2.</span> <span class="nav-text">外键操作</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#正向查找：多对一（设置了foreignKey一方开始查找另一表）"><span class="nav-number">1.2.1.</span> <span class="nav-text">正向查找：多对一（设置了foreignKey一方开始查找另一表）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#反向查找：一对多"><span class="nav-number">1.2.2.</span> <span class="nav-text">反向查找：一对多</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#多表查询之ManyToManyField"><span class="nav-number">1.3.</span> <span class="nav-text">多表查询之ManyToManyField</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#聚合查询和分组查询"><span class="nav-number">1.4.</span> <span class="nav-text">聚合查询和分组查询</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#F查询和Q查询"><span class="nav-number">1.5.</span> <span class="nav-text">F查询和Q查询</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#F查询"><span class="nav-number">1.5.1.</span> <span class="nav-text">F查询</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Q查询"><span class="nav-number">1.5.2.</span> <span class="nav-text">Q查询</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ORM表自关联"><span class="nav-number">1.6.</span> <span class="nav-text">ORM表自关联</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#创建自关联表-一对多情景"><span class="nav-number">1.6.1.</span> <span class="nav-text">创建自关联表(一对多情景)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#多对多表自关联"><span class="nav-number">1.6.2.</span> <span class="nav-text">多对多表自关联</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Django终端打印SQL语句"><span class="nav-number">1.7.</span> <span class="nav-text">Django终端打印SQL语句</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#在Python脚本中调用Django环境"><span class="nav-number">1.8.</span> <span class="nav-text">在Python脚本中调用Django环境</span></a></li></ol></li></ol></div>
         
       </div>
       <!--/noindex-->
@@ -725,7 +719,7 @@
         
           <a href="/archives/">
         
-          <span class="site-state-item-count">2</span>
+          <span class="site-state-item-count">3</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>

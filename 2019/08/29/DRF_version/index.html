@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+
+
+
+
+
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.3.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.3.0">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.3.0">
+  <link rel="mask-icon" href="/images/logo.svg?v=7.3.0" color="#222">
+
+<link rel="stylesheet" href="/css/main.css?v=7.3.0">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '7.3.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: 'Copy',
+      copy_success: 'Copied',
+      copy_failure: 'Copy failed'
+    }
+  };
+</script>
+
+  <meta name="description" content="Django Rest Framework 版本控制前言 通过DRF写的视图类，都会继承APIVIEW，而APIVIEW类继承VIEW，同时其重写了as_view方法【使之cbv能够url传参】 dispatch方法，重新封装了request对象 将老的request对象赋值为_request 前端传过来的所有数据给了：request.data 之前的request.GET封装成：request.">
+<meta name="keywords" content="Django">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Django Rest Framework 版本控制">
+<meta property="og:url" content="http://yoursite.com/2019/08/29/DRF_version/index.html">
+<meta property="og:site_name" content="Johny的博客">
+<meta property="og:description" content="Django Rest Framework 版本控制前言 通过DRF写的视图类，都会继承APIVIEW，而APIVIEW类继承VIEW，同时其重写了as_view方法【使之cbv能够url传参】 dispatch方法，重新封装了request对象 将老的request对象赋值为_request 前端传过来的所有数据给了：request.data 之前的request.GET封装成：request.">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-08-29T23:40:01.591Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Django Rest Framework 版本控制">
+<meta name="twitter:description" content="Django Rest Framework 版本控制前言 通过DRF写的视图类，都会继承APIVIEW，而APIVIEW类继承VIEW，同时其重写了as_view方法【使之cbv能够url传参】 dispatch方法，重新封装了request对象 将老的request对象赋值为_request 前端传过来的所有数据给了：request.data 之前的request.GET封装成：request.">
+  <link rel="canonical" href="http://yoursite.com/2019/08/29/DRF_version/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>Django Rest Framework 版本控制 | Johny的博客</title>
+  <meta name="generator" content="Hexo 3.9.0">
+  
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Johny的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">唯有学习与你能让我安心</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+      
+      
+      
+        
+        <li class="menu-item menu-item-home">
+      
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-tags">
+      
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>Tags</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-archives">
+      
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
+
+  </li>
+  </ul>
+
+    
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+      <article itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block post">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/29/DRF_version/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Johny cai">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Johny的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">Django Rest Framework 版本控制
+
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              
+                
+              
+
+              <time title="Created: 2019-08-29 09:10:14" itemprop="dateCreated datePublished" datetime="2019-08-29T09:10:14+08:00">2019-08-29</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2019-08-30 07:40:01" itemprop="dateModified" datetime="2019-08-30T07:40:01+08:00">2019-08-30</time>
+              </span>
+            
+          
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="Django-Rest-Framework-版本控制"><a href="#Django-Rest-Framework-版本控制" class="headerlink" title="Django Rest Framework 版本控制"></a>Django Rest Framework 版本控制</h2><h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><blockquote>
+<p>通过DRF写的视图类，都会继承APIVIEW，而APIVIEW类继承VIEW，同时其重写了as_view方法【使之cbv能够url传参】</p>
+<p>dispatch方法，重新封装了request对象</p>
+<p>将老的request对象赋值为_request</p>
+<p>前端传过来的所有数据给了：request.data</p>
+<p>之前的request.GET封装成：request.query_params</p>
+</blockquote>
+<h3 id="版本控制是做什么用的-我们为什么要用"><a href="#版本控制是做什么用的-我们为什么要用" class="headerlink" title="版本控制是做什么用的, 我们为什么要用?"></a>版本控制是做什么用的, 我们为什么要用?</h3><blockquote>
+<p>开发是有周期，及版本迭代的，新版本上线，老版本也不能直接拉下，需要进行维护</p>
+</blockquote>
+<h3 id="版本控制是怎么实现的"><a href="#版本控制是怎么实现的" class="headerlink" title="版本控制是怎么实现的"></a>版本控制是怎么实现的</h3><p>version版本信息 赋值给了 request.version  </p>
+<p>版本控制方案 赋值给了 request.versioning_scheme</p>
+<p>从而之后我们在视图中就可以通过request点属性，操作版本信息了</p>
+<p>其实这个版本控制方案<del>就是我们配置的版本控制的类</del></p>
+<p>也就是说，APIView通过这个方法初始化自己提供的组件~~</p>
+<p>DRF提供了5种版本控制类的方法：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> rest_framework <span class="keyword">import</span> versioning</span><br><span class="line"></span><br><span class="line"><span class="comment">#最基础的版本控制类，给其他版本控制类提供一些共用方法</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">BaseVersioning</span><span class="params">(object)</span>:</span> ...</span><br><span class="line">	default_version = api_settings.DEFAULT_VERSION</span><br><span class="line">    allowed_versions = api_settings.ALLOWED_VERSIONS</span><br><span class="line">    version_param = api_settings.VERSION_PARAM</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">determine_version</span><span class="params">(self, request, *args, **kwargs)</span>:</span></span><br><span class="line">        msg = <span class="string">'&#123;cls&#125;.determine_version() must be implemented.'</span></span><br><span class="line">        <span class="keyword">raise</span> NotImplementedError(msg.format(</span><br><span class="line">            cls=self.__class__.__name__</span><br><span class="line">        ))</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">reverse</span><span class="params">(self, viewname, args=None, kwargs=None, request=None, format=None, **extra)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> _reverse(viewname, args, kwargs, request, format, **extra)</span><br><span class="line"></span><br><span class="line">    <span class="comment">#判断是否能访问当前版本</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">is_allowed_version</span><span class="params">(self, version)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> self.allowed_versions:</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">True</span></span><br><span class="line">        <span class="comment">#version存在并且等于默认版本或者version在允许访问的版本中</span></span><br><span class="line">        <span class="comment">#返回True or Fasle</span></span><br><span class="line">        <span class="keyword">return</span> ((version <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span> <span class="keyword">and</span> version == self.default_version) <span class="keyword">or</span></span><br><span class="line">                (version <span class="keyword">in</span> self.allowed_versions))</span><br><span class="line"></span><br><span class="line"><span class="comment"># 在accept请求头中配置版本信息</span></span><br><span class="line"><span class="comment"># accept代表希望返回的数据类型 可以携带版本信息</span></span><br><span class="line"><span class="comment"># Accept: application/json; version=1.0</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">AcceptHeaderVersioning</span><span class="params">(BaseVersioning)</span>:</span> ...</span><br><span class="line">	<span class="keyword">pass</span></span><br><span class="line"><span class="comment"># 在url上携带版本信息</span></span><br><span class="line"><span class="comment"># url(r'^(?P&lt;version&gt;[v1|v2]+)/users/$',users_list,name='users-list')</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">URLPathVersioning</span><span class="params">(BaseVersioning)</span>:</span></span><br><span class="line">     <span class="string">"""</span></span><br><span class="line"><span class="string">    To the client this is the same style as `NamespaceVersioning`.</span></span><br><span class="line"><span class="string">    The difference is in the backend - this implementation uses</span></span><br><span class="line"><span class="string">    Django's URL keyword arguments to determine the version.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    An example URL conf for two views that accept two different versions.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    urlpatterns = [</span></span><br><span class="line"><span class="string">        url(r'^(?P&lt;version&gt;[v1|v2]+)/users/$', users_list, name='users-list'),</span></span><br><span class="line"><span class="string">        url(r'^(?P&lt;version&gt;[v1|v2]+)/users/(?P&lt;pk&gt;[0-9]+)/$', users_detail, name='users-detail')</span></span><br><span class="line"><span class="string">    ]</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    GET /1.0/something/ HTTP/1.1</span></span><br><span class="line"><span class="string">    Host: example.com</span></span><br><span class="line"><span class="string">    Accept: application/json</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    invalid_version_message = _(<span class="string">'Invalid version in URL path.'</span>)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">determine_version</span><span class="params">(self, request, *args, **kwargs)</span>:</span></span><br><span class="line">        <span class="comment">#version_param  default_version DEFAULT_VERSION 都是在settings配置</span></span><br><span class="line">        <span class="comment">#version_param :url中获取值的key</span></span><br><span class="line">        <span class="comment">#default_version :默认版本</span></span><br><span class="line">        <span class="comment">#ALLOWED_VERSIONS：允许的版本</span></span><br><span class="line">        version = kwargs.get(self.version_param, self.default_version)</span><br><span class="line">        <span class="comment">#如果version不存在,或者version不在允许访问的版本列表中</span></span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> self.is_allowed_version(version):</span><br><span class="line">            <span class="comment">#抛出异常</span></span><br><span class="line">            <span class="keyword">raise</span> exceptions.NotFound(self.invalid_version_message)</span><br><span class="line">        <span class="comment">#返回版本</span></span><br><span class="line">        <span class="keyword">return</span> version</span><br><span class="line"></span><br><span class="line"><span class="comment"># 把版本信息放在路由分发里，并把路由的namespace配置成版本</span></span><br><span class="line"><span class="comment"># url('^v1/', include('users.urls', namespace='v1'))</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">NamespaceVersioning</span><span class="params">(BaseVersioning)</span>:</span></span><br><span class="line">    <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 在我们的host上配置版本信息</span></span><br><span class="line"><span class="comment"># Host: v1.example.com</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">HostNameVersioning</span><span class="params">(BaseVersioning)</span>:</span></span><br><span class="line">    <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 在我们url上过滤条件上配置版本信息</span></span><br><span class="line"><span class="comment"># GET /something/?version=0.1 HTTP/1.1</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">QueryParameterVersioning</span><span class="params">(BaseVersioning)</span>:</span></span><br><span class="line">    <span class="keyword">pass</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="版本配置如何使用"><a href="#版本配置如何使用" class="headerlink" title="版本配置如何使用"></a>版本配置如何使用</h3><blockquote>
+<p>不管基于那种方式都需要配置settings</p>
+</blockquote>
+<h4 id="setting配置"><a href="#setting配置" class="headerlink" title="setting配置"></a><strong>setting配置</strong></h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">REST_FRAMEWORK = &#123;</span><br><span class="line">    <span class="string">'DEFAULT_VERSION'</span>: <span class="string">'v1'</span>,            <span class="comment"># 默认版本</span></span><br><span class="line">    <span class="string">'ALLOWED_VERSIONS'</span>: [<span class="string">'v1'</span>, <span class="string">'v2'</span>],   <span class="comment"># 允许的版本</span></span><br><span class="line">    <span class="string">'VERSION_PARAM'</span>: <span class="string">'version'</span>          <span class="comment"># URL中获取值的key</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="基于url的get传参方式"><a href="#基于url的get传参方式" class="headerlink" title="基于url的get传参方式"></a>基于url的get传参方式</h4><blockquote>
+<p>/users?verson=v1</p>
+</blockquote>
+<p><strong>urls.py</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> web.views <span class="keyword">import</span> TestView</span><br><span class="line"></span><br><span class="line">urlpatterns = [</span><br><span class="line">    url(<span class="string">r'^test/'</span>, TestView.as_view(),name=<span class="string">'test'</span>), <span class="comment">#不同的方式此处路由方式不同</span></span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<p>Views.py</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python</span></span><br><span class="line"><span class="comment"># -*- coding:utf-8 -*-</span></span><br><span class="line"><span class="keyword">from</span> rest_framework.views <span class="keyword">import</span> APIView</span><br><span class="line"><span class="keyword">from</span> rest_framework.response <span class="keyword">import</span> Response</span><br><span class="line"><span class="keyword">from</span> rest_framework.versioning <span class="keyword">import</span> QueryParameterVersioning</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">TestView</span><span class="params">(APIView)</span>:</span></span><br><span class="line">    versioning_class = QueryParameterVersioning  <span class="comment">#不同的方式此处引用的类不通</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get</span><span class="params">(self, request, *args, **kwargs)</span>:</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># 获取版本</span></span><br><span class="line">        print(request.version)</span><br><span class="line">        <span class="comment"># 获取版本管理的类</span></span><br><span class="line">        print(request.versioning_scheme)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 反向生成URL</span></span><br><span class="line">        reverse_url = request.versioning_scheme.reverse(<span class="string">'test'</span>, request=request)</span><br><span class="line">        print(reverse_url)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> Response(<span class="string">'GET请求，响应内容'</span>)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">post</span><span class="params">(self, request, *args, **kwargs)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> Response(<span class="string">'POST请求，响应内容'</span>)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">put</span><span class="params">(self, request, *args, **kwargs)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> Response(<span class="string">'PUT请求，响应内容'</span>)</span><br></pre></td></tr></table></figure>
+
+<h4 id="基于url的正则方式"><a href="#基于url的正则方式" class="headerlink" title="基于url的正则方式"></a>基于url的正则方式</h4><blockquote>
+<p>/v1/users/</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># urls.py</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> web.views <span class="keyword">import</span> TestView</span><br><span class="line"></span><br><span class="line">urlpatterns = [</span><br><span class="line">    url(<span class="string">r'^(?P&lt;version&gt;[v1|v2]+)/test/'</span>, TestView.as_view(), name=<span class="string">'test'</span>),</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line"><span class="comment"># views.py</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> rest_framework.views <span class="keyword">import</span> APIView</span><br><span class="line"><span class="keyword">from</span> rest_framework.response <span class="keyword">import</span> Response</span><br><span class="line"><span class="keyword">from</span> rest_framework.versioning <span class="keyword">import</span> URLPathVersioning</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">TestView</span><span class="params">(APIView)</span>:</span></span><br><span class="line">    versioning_class = URLPathVersioning</span><br></pre></td></tr></table></figure>
+
+<h4 id="基于主机名方法"><a href="#基于主机名方法" class="headerlink" title="基于主机名方法"></a>基于主机名方法</h4><blockquote>
+<p>v1.example.com</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># urls.py</span></span><br><span class="line"><span class="keyword">from</span> web.views <span class="keyword">import</span> TestView</span><br><span class="line"></span><br><span class="line">urlpatterns = [</span><br><span class="line">    url(<span class="string">r'^test/'</span>, TestView.as_view(), name=<span class="string">'test'</span>),</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line"><span class="comment"># views.py</span></span><br><span class="line"><span class="keyword">from</span> rest_framework.views <span class="keyword">import</span> APIView</span><br><span class="line"><span class="keyword">from</span> rest_framework.response <span class="keyword">import</span> Response</span><br><span class="line"><span class="keyword">from</span> rest_framework.versioning <span class="keyword">import</span> URLPathVersioning</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">TestView</span><span class="params">(APIView)</span>:</span></span><br><span class="line">    versioning_class = HostNameVersioning</span><br></pre></td></tr></table></figure>
+
+<h4 id="基于django路由系统的namespace"><a href="#基于django路由系统的namespace" class="headerlink" title="基于django路由系统的namespace"></a>基于django路由系统的namespace</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># urls.py</span></span><br><span class="line"><span class="keyword">from</span> django.conf.urls <span class="keyword">import</span> url, include</span><br><span class="line"><span class="keyword">from</span> web.views <span class="keyword">import</span> TestView</span><br><span class="line"></span><br><span class="line">urlpatterns = [</span><br><span class="line">    url(<span class="string">r'^v1/'</span>, ([</span><br><span class="line">                      url(<span class="string">r'test/'</span>, TestView.as_view(), name=<span class="string">'test'</span>),</span><br><span class="line">                  ], <span class="literal">None</span>, <span class="string">'v1'</span>)),</span><br><span class="line">    url(<span class="string">r'^v2/'</span>, ([</span><br><span class="line">                      url(<span class="string">r'test/'</span>, TestView.as_view(), name=<span class="string">'test'</span>),</span><br><span class="line">                  ], <span class="literal">None</span>, <span class="string">'v2'</span>)),</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line"><span class="comment"># views.py</span></span><br><span class="line"><span class="keyword">from</span> rest_framework.views <span class="keyword">import</span> APIView</span><br><span class="line"><span class="keyword">from</span> rest_framework.response <span class="keyword">import</span> Response</span><br><span class="line"><span class="keyword">from</span> rest_framework.versioning <span class="keyword">import</span> NamespaceVersioning</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">TestView</span><span class="params">(APIView)</span>:</span></span><br><span class="line">    versioning_class = NamespaceVersioning</span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+        
+      
+        <div id="reward-container">
+  <div>坚持原创技术分享，您的支持将鼓励我继续创作！.</div>
+  <button id="reward-button" disable="enable" onclick="var qr = document.getElementById(&quot;qr&quot;); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    Donate
+  </button>
+  <div id="qr" style="display: none;">
+        
+      
+      <div style="display: inline-block">
+        <img src="/images/WechatIMG20.jpeg" alt="Johny cai WeChat Pay">
+        <p>WeChat Pay</p>
+      </div>
+
+  </div>
+</div>
+
+      
+
+      <footer class="post-footer">
+          
+            
+          
+          <div class="post-tags">
+            
+              <a href="/tagss/Django/" rel="tag"># Django</a>
+            
+          </div>
+        
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/2019/08/28/django_rest_framework_serializer/" rel="next" title="Django Rest Framework 序列操作">
+                  <i class="fa fa-chevron-left"></i> Django Rest Framework 序列操作
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+            </div>
+          </div>
+        
+      </footer>
+    
+  </div>
+  
+  
+  
+  </article>
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+        
+        
+        
+        
+      
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc" data-target="post-toc-wrap">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Django-Rest-Framework-版本控制"><span class="nav-number">1.</span> <span class="nav-text">Django Rest Framework 版本控制</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#前言"><span class="nav-number">1.1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#版本控制是做什么用的-我们为什么要用"><span class="nav-number">1.2.</span> <span class="nav-text">版本控制是做什么用的, 我们为什么要用?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#版本控制是怎么实现的"><span class="nav-number">1.3.</span> <span class="nav-text">版本控制是怎么实现的</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#版本配置如何使用"><span class="nav-number">1.4.</span> <span class="nav-text">版本配置如何使用</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#setting配置"><span class="nav-number">1.4.1.</span> <span class="nav-text">setting配置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#基于url的get传参方式"><span class="nav-number">1.4.2.</span> <span class="nav-text">基于url的get传参方式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#基于url的正则方式"><span class="nav-number">1.4.3.</span> <span class="nav-text">基于url的正则方式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#基于主机名方法"><span class="nav-number">1.4.4.</span> <span class="nav-text">基于主机名方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#基于django路由系统的namespace"><span class="nav-number">1.4.5.</span> <span class="nav-text">基于django路由系统的namespace</span></a></li></ol></li></ol></li></ol></div>
+        
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Johny cai</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+  <nav class="site-state motion-element">
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">3</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-tags">
+        
+        
+        
+          
+        
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">tags</span>
+        
+      </div>
+    
+  </nav>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="https://github.com/caijyi1" title="GitHub &rarr; https://github.com/caijyi1" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+    
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="mailto:caijyi1@gmail.com" title="E-Mail &rarr; mailto:caijyi1@gmail.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+    
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Johny cai</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.9.0</div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.3.0</div>
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/jquery/index.js?v=3.4.1"></script>
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+<script src="/js/utils.js?v=7.3.0"></script><script src="/js/motion.js?v=7.3.0"></script>
+<script src="/js/schemes/muse.js?v=7.3.0"></script>
+<script src="/js/next-boot.js?v=7.3.0"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>
