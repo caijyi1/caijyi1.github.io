@@ -115,6 +115,8 @@
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
   <div class="container use-motion">
     <div class="headband"></div>
+	<a href="https://github.com/caijyi1/" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#64CEAA; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
@@ -164,6 +166,17 @@
     
 
     <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>Tags</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-categories">
+      
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>Categories</a>
 
   </li>
       
@@ -243,7 +256,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2019-08-30 07:40:01" itemprop="dateModified" datetime="2019-08-30T07:40:01+08:00">2019-08-30</time>
+                <time title="Modified: 2019-10-25 10:46:51" itemprop="dateModified" datetime="2019-10-25T10:46:51+08:00">2019-10-25</time>
               </span>
             
           
@@ -274,36 +287,15 @@
 <p>从而之后我们在视图中就可以通过request点属性，操作版本信息了</p>
 <p>其实这个版本控制方案<del>就是我们配置的版本控制的类</del></p>
 <p>也就是说，APIView通过这个方法初始化自己提供的组件~~</p>
-<p>DRF提供了5种版本控制类的方法：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> rest_framework <span class="keyword">import</span> versioning</span><br><span class="line"></span><br><span class="line"><span class="comment">#最基础的版本控制类，给其他版本控制类提供一些共用方法</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">BaseVersioning</span><span class="params">(object)</span>:</span> ...</span><br><span class="line">	default_version = api_settings.DEFAULT_VERSION</span><br><span class="line">    allowed_versions = api_settings.ALLOWED_VERSIONS</span><br><span class="line">    version_param = api_settings.VERSION_PARAM</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">determine_version</span><span class="params">(self, request, *args, **kwargs)</span>:</span></span><br><span class="line">        msg = <span class="string">'&#123;cls&#125;.determine_version() must be implemented.'</span></span><br><span class="line">        <span class="keyword">raise</span> NotImplementedError(msg.format(</span><br><span class="line">            cls=self.__class__.__name__</span><br><span class="line">        ))</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">reverse</span><span class="params">(self, viewname, args=None, kwargs=None, request=None, format=None, **extra)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> _reverse(viewname, args, kwargs, request, format, **extra)</span><br><span class="line"></span><br><span class="line">    <span class="comment">#判断是否能访问当前版本</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">is_allowed_version</span><span class="params">(self, version)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> self.allowed_versions:</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">True</span></span><br><span class="line">        <span class="comment">#version存在并且等于默认版本或者version在允许访问的版本中</span></span><br><span class="line">        <span class="comment">#返回True or Fasle</span></span><br><span class="line">        <span class="keyword">return</span> ((version <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span> <span class="keyword">and</span> version == self.default_version) <span class="keyword">or</span></span><br><span class="line">                (version <span class="keyword">in</span> self.allowed_versions))</span><br><span class="line"></span><br><span class="line"><span class="comment"># 在accept请求头中配置版本信息</span></span><br><span class="line"><span class="comment"># accept代表希望返回的数据类型 可以携带版本信息</span></span><br><span class="line"><span class="comment"># Accept: application/json; version=1.0</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">AcceptHeaderVersioning</span><span class="params">(BaseVersioning)</span>:</span> ...</span><br><span class="line">	<span class="keyword">pass</span></span><br><span class="line"><span class="comment"># 在url上携带版本信息</span></span><br><span class="line"><span class="comment"># url(r'^(?P&lt;version&gt;[v1|v2]+)/users/$',users_list,name='users-list')</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">URLPathVersioning</span><span class="params">(BaseVersioning)</span>:</span></span><br><span class="line">     <span class="string">"""</span></span><br><span class="line"><span class="string">    To the client this is the same style as `NamespaceVersioning`.</span></span><br><span class="line"><span class="string">    The difference is in the backend - this implementation uses</span></span><br><span class="line"><span class="string">    Django's URL keyword arguments to determine the version.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    An example URL conf for two views that accept two different versions.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    urlpatterns = [</span></span><br><span class="line"><span class="string">        url(r'^(?P&lt;version&gt;[v1|v2]+)/users/$', users_list, name='users-list'),</span></span><br><span class="line"><span class="string">        url(r'^(?P&lt;version&gt;[v1|v2]+)/users/(?P&lt;pk&gt;[0-9]+)/$', users_detail, name='users-detail')</span></span><br><span class="line"><span class="string">    ]</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    GET /1.0/something/ HTTP/1.1</span></span><br><span class="line"><span class="string">    Host: example.com</span></span><br><span class="line"><span class="string">    Accept: application/json</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    invalid_version_message = _(<span class="string">'Invalid version in URL path.'</span>)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">determine_version</span><span class="params">(self, request, *args, **kwargs)</span>:</span></span><br><span class="line">        <span class="comment">#version_param  default_version DEFAULT_VERSION 都是在settings配置</span></span><br><span class="line">        <span class="comment">#version_param :url中获取值的key</span></span><br><span class="line">        <span class="comment">#default_version :默认版本</span></span><br><span class="line">        <span class="comment">#ALLOWED_VERSIONS：允许的版本</span></span><br><span class="line">        version = kwargs.get(self.version_param, self.default_version)</span><br><span class="line">        <span class="comment">#如果version不存在,或者version不在允许访问的版本列表中</span></span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> self.is_allowed_version(version):</span><br><span class="line">            <span class="comment">#抛出异常</span></span><br><span class="line">            <span class="keyword">raise</span> exceptions.NotFound(self.invalid_version_message)</span><br><span class="line">        <span class="comment">#返回版本</span></span><br><span class="line">        <span class="keyword">return</span> version</span><br><span class="line"></span><br><span class="line"><span class="comment"># 把版本信息放在路由分发里，并把路由的namespace配置成版本</span></span><br><span class="line"><span class="comment"># url('^v1/', include('users.urls', namespace='v1'))</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">NamespaceVersioning</span><span class="params">(BaseVersioning)</span>:</span></span><br><span class="line">    <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 在我们的host上配置版本信息</span></span><br><span class="line"><span class="comment"># Host: v1.example.com</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">HostNameVersioning</span><span class="params">(BaseVersioning)</span>:</span></span><br><span class="line">    <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 在我们url上过滤条件上配置版本信息</span></span><br><span class="line"><span class="comment"># GET /something/?version=0.1 HTTP/1.1</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">QueryParameterVersioning</span><span class="params">(BaseVersioning)</span>:</span></span><br><span class="line">    <span class="keyword">pass</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="版本配置如何使用"><a href="#版本配置如何使用" class="headerlink" title="版本配置如何使用"></a>版本配置如何使用</h3><blockquote>
-<p>不管基于那种方式都需要配置settings</p>
-</blockquote>
-<h4 id="setting配置"><a href="#setting配置" class="headerlink" title="setting配置"></a><strong>setting配置</strong></h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">REST_FRAMEWORK = &#123;</span><br><span class="line">    <span class="string">'DEFAULT_VERSION'</span>: <span class="string">'v1'</span>,            <span class="comment"># 默认版本</span></span><br><span class="line">    <span class="string">'ALLOWED_VERSIONS'</span>: [<span class="string">'v1'</span>, <span class="string">'v2'</span>],   <span class="comment"># 允许的版本</span></span><br><span class="line">    <span class="string">'VERSION_PARAM'</span>: <span class="string">'version'</span>          <span class="comment"># URL中获取值的key</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h4 id="基于url的get传参方式"><a href="#基于url的get传参方式" class="headerlink" title="基于url的get传参方式"></a>基于url的get传参方式</h4><blockquote>
-<p>/users?verson=v1</p>
-</blockquote>
-<p><strong>urls.py</strong></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> web.views <span class="keyword">import</span> TestView</span><br><span class="line"></span><br><span class="line">urlpatterns = [</span><br><span class="line">    url(<span class="string">r'^test/'</span>, TestView.as_view(),name=<span class="string">'test'</span>), <span class="comment">#不同的方式此处路由方式不同</span></span><br><span class="line">]</span><br></pre></td></tr></table></figure>
-
-<p>Views.py</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python</span></span><br><span class="line"><span class="comment"># -*- coding:utf-8 -*-</span></span><br><span class="line"><span class="keyword">from</span> rest_framework.views <span class="keyword">import</span> APIView</span><br><span class="line"><span class="keyword">from</span> rest_framework.response <span class="keyword">import</span> Response</span><br><span class="line"><span class="keyword">from</span> rest_framework.versioning <span class="keyword">import</span> QueryParameterVersioning</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">TestView</span><span class="params">(APIView)</span>:</span></span><br><span class="line">    versioning_class = QueryParameterVersioning  <span class="comment">#不同的方式此处引用的类不通</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get</span><span class="params">(self, request, *args, **kwargs)</span>:</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># 获取版本</span></span><br><span class="line">        print(request.version)</span><br><span class="line">        <span class="comment"># 获取版本管理的类</span></span><br><span class="line">        print(request.versioning_scheme)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 反向生成URL</span></span><br><span class="line">        reverse_url = request.versioning_scheme.reverse(<span class="string">'test'</span>, request=request)</span><br><span class="line">        print(reverse_url)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> Response(<span class="string">'GET请求，响应内容'</span>)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">post</span><span class="params">(self, request, *args, **kwargs)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> Response(<span class="string">'POST请求，响应内容'</span>)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">put</span><span class="params">(self, request, *args, **kwargs)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> Response(<span class="string">'PUT请求，响应内容'</span>)</span><br></pre></td></tr></table></figure>
-
-<h4 id="基于url的正则方式"><a href="#基于url的正则方式" class="headerlink" title="基于url的正则方式"></a>基于url的正则方式</h4><blockquote>
-<p>/v1/users/</p>
-</blockquote>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># urls.py</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> web.views <span class="keyword">import</span> TestView</span><br><span class="line"></span><br><span class="line">urlpatterns = [</span><br><span class="line">    url(<span class="string">r'^(?P&lt;version&gt;[v1|v2]+)/test/'</span>, TestView.as_view(), name=<span class="string">'test'</span>),</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line"><span class="comment"># views.py</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> rest_framework.views <span class="keyword">import</span> APIView</span><br><span class="line"><span class="keyword">from</span> rest_framework.response <span class="keyword">import</span> Response</span><br><span class="line"><span class="keyword">from</span> rest_framework.versioning <span class="keyword">import</span> URLPathVersioning</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">TestView</span><span class="params">(APIView)</span>:</span></span><br><span class="line">    versioning_class = URLPathVersioning</span><br></pre></td></tr></table></figure>
-
-<h4 id="基于主机名方法"><a href="#基于主机名方法" class="headerlink" title="基于主机名方法"></a>基于主机名方法</h4><blockquote>
-<p>v1.example.com</p>
-</blockquote>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># urls.py</span></span><br><span class="line"><span class="keyword">from</span> web.views <span class="keyword">import</span> TestView</span><br><span class="line"></span><br><span class="line">urlpatterns = [</span><br><span class="line">    url(<span class="string">r'^test/'</span>, TestView.as_view(), name=<span class="string">'test'</span>),</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line"><span class="comment"># views.py</span></span><br><span class="line"><span class="keyword">from</span> rest_framework.views <span class="keyword">import</span> APIView</span><br><span class="line"><span class="keyword">from</span> rest_framework.response <span class="keyword">import</span> Response</span><br><span class="line"><span class="keyword">from</span> rest_framework.versioning <span class="keyword">import</span> URLPathVersioning</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">TestView</span><span class="params">(APIView)</span>:</span></span><br><span class="line">    versioning_class = HostNameVersioning</span><br></pre></td></tr></table></figure>
-
-<h4 id="基于django路由系统的namespace"><a href="#基于django路由系统的namespace" class="headerlink" title="基于django路由系统的namespace"></a>基于django路由系统的namespace</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># urls.py</span></span><br><span class="line"><span class="keyword">from</span> django.conf.urls <span class="keyword">import</span> url, include</span><br><span class="line"><span class="keyword">from</span> web.views <span class="keyword">import</span> TestView</span><br><span class="line"></span><br><span class="line">urlpatterns = [</span><br><span class="line">    url(<span class="string">r'^v1/'</span>, ([</span><br><span class="line">                      url(<span class="string">r'test/'</span>, TestView.as_view(), name=<span class="string">'test'</span>),</span><br><span class="line">                  ], <span class="literal">None</span>, <span class="string">'v1'</span>)),</span><br><span class="line">    url(<span class="string">r'^v2/'</span>, ([</span><br><span class="line">                      url(<span class="string">r'test/'</span>, TestView.as_view(), name=<span class="string">'test'</span>),</span><br><span class="line">                  ], <span class="literal">None</span>, <span class="string">'v2'</span>)),</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line"><span class="comment"># views.py</span></span><br><span class="line"><span class="keyword">from</span> rest_framework.views <span class="keyword">import</span> APIView</span><br><span class="line"><span class="keyword">from</span> rest_framework.response <span class="keyword">import</span> Response</span><br><span class="line"><span class="keyword">from</span> rest_framework.versioning <span class="keyword">import</span> NamespaceVersioning</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">TestView</span><span class="params">(APIView)</span>:</span></span><br><span class="line">    versioning_class = NamespaceVersioning</span><br></pre></td></tr></table></figure>
-
-
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/2019/08/29/DRF_version/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
         
       
     </div>
@@ -356,11 +348,19 @@
                 
               
 
-              <time title="Created: 2019-08-28 09:10:14 / Modified: 16:53:18" itemprop="dateCreated datePublished" datetime="2019-08-28T09:10:14+08:00">2019-08-28</time>
+              <time title="Created: 2019-08-28 09:10:14" itemprop="dateCreated datePublished" datetime="2019-08-28T09:10:14+08:00">2019-08-28</time>
             </span>
           
             
 
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2019-10-25 10:46:09" itemprop="dateModified" datetime="2019-10-25T10:46:09+08:00">2019-10-25</time>
+              </span>
             
           
 
@@ -383,100 +383,15 @@
 </blockquote>
 <p>简单来说，针对get来说，serializers的作用体现在第一条</p>
 <p>但如果是其他请求，serializers能够发挥2,3条的作用！</p>
-<h3 id="常用的field"><a href="#常用的field" class="headerlink" title="常用的field"></a>常用的field</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">mobile = serializers.CharField(max_length=<span class="number">11</span>, min_length=<span class="number">11</span>)</span><br><span class="line">age = serializers.IntegerField(min_value=<span class="number">1</span>, max_value=<span class="number">100</span>)</span><br><span class="line"><span class="comment"># format可以设置时间的格式，下面例子会输出如:2018-3-20 12:10</span></span><br><span class="line">pay_time = serializers.DateTimeField(read_only=<span class="literal">True</span>,format=<span class="string">'%Y-%m-%d %H:%M'</span>)</span><br><span class="line">is_hot = serializers.BooleanField() <span class="comment"># 设置商品是否热销</span></span><br></pre></td></tr></table></figure>
-
-<h4 id="HiddenField"><a href="#HiddenField" class="headerlink" title="HiddenField"></a>HiddenField</h4><blockquote>
-<p>HiddenField的值不依靠输入，而需要设置默认的值，不需要用户自己post数据过来，也不会显式返回给用户，最常用的就是user!! </p>
-<p>我们在收藏某件商品的时候，后台要获取到当前的用户；相当于前台只需要传递过来一个商品的ID即可；那么在后台我根据当前的登入用户和当前的商品ID即可判断用户是否收藏过该商品；这就是一个联合唯一主键的判断；这同样需要使用HiddenField</p>
-</blockquote>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 如果你的viewset含有post，那么你需要重载create方法，如果含有patch，那么就需要重载update方法</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ArticleSerializer</span><span class="params">(serializers.Serializer)</span>:</span></span><br><span class="line">    user = serializers.HiddenField(</span><br><span class="line">    default=serializers.CurrentUserDefault())</span><br><span class="line">    name = serializers.CharField(max_length=<span class="number">20</span>)</span><br><span class="line">    content = serializers.CharField()</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">create</span><span class="params">(self, validated_data)</span>:</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># 除了用户，其他数据可以从validated_data这个字典中获取</span></span><br><span class="line">        <span class="comment"># 注意，users在这里是放在上下文中的request，而不是直接的request</span></span><br><span class="line">        user = self.context[<span class="string">'request'</span>].user</span><br><span class="line">        name = validated_data[<span class="string">'name '</span>]</span><br><span class="line">        content = validated_data[<span class="string">'content '</span>]</span><br><span class="line">        <span class="keyword">return</span> Article.objects.create(**validated_data)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">update</span><span class="params">(self, instance, validated_data)</span>:</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># 更新的特别之处在于你已经获取到了这个对象instance</span></span><br><span class="line">        instance.name = validated_data.get(<span class="string">'name'</span>)</span><br><span class="line">        instance.content = validated_data.get(<span class="string">'content'</span>)</span><br><span class="line">        instance.save()</span><br><span class="line">        <span class="keyword">return</span> instance</span><br></pre></td></tr></table></figure>
-
-<h3 id="字段参数"><a href="#字段参数" class="headerlink" title="字段参数"></a>字段参数</h3><p>read_only：True表示不允许用户自己上传，只能用于api的输出。如果某个字段设置了read_only=True，那么就不需要进行数据验证，只会在返回时，将这个字段序列化后返回</p>
-<blockquote>
-<p>在用户进行购物的时候，用户post订单时，肯定会产生一个订单号，而这个订单号应该由后台逻辑完成，而不应该由用户post过来，如果不设置read_only=True，那么验证的时候就会报错。</p>
-<p>我们在网上购物时，支付时通常会产生支付状态，交易号，订单号，支付时间等字段，这些字段都应该设置为read_only=True，即这些字段都应该由后台产生然后返回给客户端；</p>
-</blockquote>
-<blockquote>
-<p>在用户提交订单的时候，我们在这里给用户新增一个字段，就是支付宝支付的URL<br>要设置为read_only=True，这样的话，就不能让用户端提交了，而是服务器端生成<br>返回给用户的</p>
-</blockquote>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">alipay_url = serializers.SerializerMethodField(read_only=<span class="literal">True</span>)</span><br></pre></td></tr></table></figure>
-
-<p>write_only: 与read_only对应;就是用户post过来的数据，后台服务器处理后不会再经过序列化后返回给客户端</p>
-<blockquote>
-<p>最常见的就是我们在使用手机注册的验证码和填写的密码。</p>
-</blockquote>
-<p>reuqired: 是否必填</p>
-<p>allow_null/allow_blank: 是否允许为NULL/空</p>
-<p>error_message: 出错时的提示信息</p>
-<p>label: 字段显示</p>
-<p>Help_text: 在指定字段增加一些提示文字，这两个字段作用于api页面比较有用 </p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 示例</span></span><br><span class="line">code = serializers.CharField(required=<span class="literal">True</span>, write_only=<span class="literal">True</span>, label=<span class="string">"验证码"</span>, max_length=<span class="number">6</span>, min_length=<span class="number">6</span>,</span><br><span class="line">error_messages=&#123;</span><br><span class="line"><span class="string">"blank"</span>: <span class="string">"请输入验证码"</span>,</span><br><span class="line"><span class="string">"required"</span>: <span class="string">"请输入验证码"</span>, </span><br><span class="line"><span class="string">"max_length"</span>: <span class="string">"验证码格式错误"</span>,</span><br><span class="line"><span class="string">"min_length"</span>: <span class="string">"验证码格式错误"</span></span><br><span class="line">&#125;,</span><br><span class="line">help_text=<span class="string">"验证码"</span>)</span><br><span class="line"></span><br><span class="line">username = serializers.CharField(required=<span class="literal">True</span>, allow_blank=<span class="literal">False</span>, label=<span class="string">"用户名"</span>,</span><br><span class="line">validators=[UniqueValidator(queryset=User.objects.all(), message=<span class="string">"用户已经存在"</span>)])</span><br><span class="line"></span><br><span class="line"><span class="comment"># 同理我们也应该将password设置write_only参数，不让它返回回去，这样容易被截获</span></span><br><span class="line">password = serializers.CharField(</span><br><span class="line">style=&#123;<span class="string">'input_type'</span>: <span class="string">'password'</span>&#125;, help_text=<span class="string">"密码"</span>, label=<span class="string">"密码"</span>, write_only=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line">color_channel = serializers.ChoiceField(</span><br><span class="line">choices=[<span class="string">'red'</span>, <span class="string">'green'</span>, <span class="string">'blue'</span>],</span><br><span class="line">style=&#123;<span class="string">'base_template'</span>: <span class="string">'radio.html'</span>&#125;)</span><br></pre></td></tr></table></figure>
-
-<h4 id="Validation自定义验证逻辑"><a href="#Validation自定义验证逻辑" class="headerlink" title="Validation自定义验证逻辑"></a>Validation自定义验证逻辑</h4><p>field它能起到一定的验证作用，但很明显，它存在很大的局限性</p>
-<blockquote>
-<p>拿实际生产环境下的例子来说，光针对用户输入的手机号码，我们在后端就需要进行验证</p>
-<p>例如该手机号码是否注册，手机号码是否合法(例如满足手机号码的正则表达式，以及要验证该手机号码向后台发送请求验证短信的频率等等</p>
-</blockquote>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">SmsSerializer</span><span class="params">(serializers.Serializer)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    为什不用ModelSerializer来完成手机号码的验证呢？</span></span><br><span class="line"><span class="string">    因为VerifyCode中还有一个字段是手机验证码字段，直接使用ModelSerializer来验证会报错</span></span><br><span class="line"><span class="string">    因为ModelSerializer会自动生成VerifyCode模型中的所有字段；但是</span></span><br><span class="line"><span class="string">    我们传递过来的就是一个手机号，判断它是否是合法的</span></span><br><span class="line"><span class="string">    因此使用Serializer来自定义合法性校验规则，相当于就是钩子函数</span></span><br><span class="line"><span class="string">    单独对手机号码进行验证</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line"></span><br><span class="line">	mobile = serializers.CharField(max_length=<span class="number">11</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 使用validate_字段名(self, 字段名)：要么返回字段，要么抛出异常</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">validate_mobile</span><span class="params">(self, mobile)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        验证手机号码，记住这里的validate_字段名一定要是数据模型中的字段</span></span><br><span class="line"><span class="string">        :param attrs:</span></span><br><span class="line"><span class="string">        :return:</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        <span class="comment"># 手机号码是否注册，查询User表即可</span></span><br><span class="line">        <span class="keyword">if</span> User.objects.filter(mobile=mobile).exists():</span><br><span class="line">            <span class="keyword">raise</span> serializers.ValidationError(<span class="string">"用户已经存在"</span>)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 验证手机号码是否合法，这部分应该是在前端做的，当然后台也需要进行验证</span></span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> re.match(REGEX_MOBILE, mobile):</span><br><span class="line">            <span class="keyword">raise</span> serializers.ValidationError(<span class="string">"手机号码格式不正确"</span>)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 验证发送频率，如果不做，用户可以一直向后台发送，请求验证码；</span></span><br><span class="line">        <span class="comment"># 会造成很大的压力，限制一分钟只能发送一次 7-8 09:00</span></span><br><span class="line">        one_minute_ago = datetime.now() - timedelta(hours=<span class="number">0</span>, minutes=<span class="number">1</span>, seconds=<span class="number">0</span>)</span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        如果添加时间在一分钟以内，它肯定是大于你一分钟之前的时间的</span></span><br><span class="line"><span class="string">        如果这条记录存在</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        <span class="keyword">if</span> VerifyCode.objects.filter(add_time__gt=one_minute_ago, mobile=mobile):</span><br><span class="line">            <span class="keyword">raise</span> serializers.ValidationError(<span class="string">"抱歉，一分钟只能发送一次"</span>)</span><br><span class="line">    	<span class="comment"># 如果验证通过，我就将这个mobile返回去，这里一定要有一个返回</span></span><br><span class="line">        <span class="keyword">return</span> mobile</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>订单号的生成，我们可以在这步生成一个订单号，然后添加到attrs这个字典中</p>
-</blockquote>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">OrderSerializer</span><span class="params">(serializers.ModelSerializer)</span>:</span></span><br><span class="line">	user = serializers.HiddenField(</span><br><span class="line">	default=serializers.CurrentUserDefault())</span><br><span class="line"></span><br><span class="line">	pay_status = serializers.CharField(read_only=<span class="literal">True</span>)</span><br><span class="line">	trade_no = serializers.CharField(read_only=<span class="literal">True</span>)</span><br><span class="line">	order_sn = serializers.CharField(read_only=<span class="literal">True</span>)</span><br><span class="line">	pay_time = serializers.DateTimeField(read_only=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    在用户提交订单的时候，我们在这里给用户新增一个字段，就是支付宝支付的URL</span></span><br><span class="line"><span class="string">    要设置为read_only=True，这样的话，就不能让用户端提交了，而是服务器端生成</span></span><br><span class="line"><span class="string">    返回给用户的</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line"></span><br><span class="line">	alipay_url = serializers.SerializerMethodField(read_only=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">get_alipay_url</span><span class="params">(self, obj)</span>:</span> <span class="comment"># obj就是OrderSerializer对象</span></span><br><span class="line">        alipay = AliPay(</span><br><span class="line">        appid=<span class="string">"2019081200490227"</span>, <span class="comment"># 沙箱环境中可以找到</span></span><br><span class="line">        app_notify_url=<span class="string">"http://47.92.87.172:8000/alipay/return/"</span>,</span><br><span class="line">        app_private_key_path=private_key_path, <span class="comment"># 个人私钥</span></span><br><span class="line">        alipay_public_key_path=ali_pub_key_path, <span class="comment"># 支付宝的公钥，验证支付宝回传消息使用，不是你自己的公钥,</span></span><br><span class="line">        debug=<span class="literal">True</span>, <span class="comment"># 默认False,上线的时候修改为False即可</span></span><br><span class="line">        return_url=<span class="string">"http://47.92.87.172:8000/alipay/return/"</span></span><br><span class="line">        )</span><br><span class="line"></span><br><span class="line">        url = alipay.direct_pay(</span><br><span class="line">        <span class="comment"># 一个订单里面可能有多个商品，因此subject</span></span><br><span class="line">        <span class="comment"># 不适合使用商品名称</span></span><br><span class="line">        subject=obj.order_sn,</span><br><span class="line">        out_trade_no=obj.order_sn,</span><br><span class="line">        total_amount=obj.order_mount,</span><br><span class="line">        )</span><br><span class="line">        re_url = <span class="string">"https://openapi.alipaydev.com/gateway.do?&#123;data&#125;"</span>.format(data=url)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> re_url</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">generate_order_sn</span><span class="params">(self)</span>:</span></span><br><span class="line"></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        后台系统生成订单号</span></span><br><span class="line"><span class="string">        这个是系统后台生成的：</span></span><br><span class="line"><span class="string">        当前时间+userId+随机数</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line"></span><br><span class="line">        random_ins = Random()</span><br><span class="line">        order_sn = <span class="string">"&#123;time_str&#125;&#123;user_id&#125;&#123;random_num&#125;"</span>.format(time_str=time.strftime(<span class="string">"%Y%m%d%H%M%S"</span>),</span><br><span class="line">        user_id=self.context[<span class="string">"request"</span>].user.id,</span><br><span class="line">        random_num=random_ins.randint(<span class="number">1000</span>, <span class="number">9999</span>))</span><br><span class="line">        <span class="keyword">return</span> order_sn</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">validate</span><span class="params">(self, attrs)</span>:</span> <span class="comment"># 全局钩子函数</span></span><br><span class="line">        attrs[<span class="string">"order_sn"</span>] = self.generate_order_sn()</span><br><span class="line">        <span class="keyword">return</span> attrs</span><br><span class="line"></span><br><span class="line">        <span class="class"><span class="keyword">class</span> <span class="title">Meta</span>:</span></span><br><span class="line">            model = OrderInfo</span><br><span class="line">            fields = <span class="string">"__all__"</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">#这个方法运用在modelserializer中，可以剔除掉write_only的字段，这个字段只验证，但不存在于指定的model当中，即不能save( )，可以在这delete掉；例如短信验证码验证完毕后就可以删除了：</span></span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">validate</span><span class="params">(self, attrs)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        判断完毕后删除验证码，因为没有什么用了</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        attrs[<span class="string">"mobile"</span>] = attrs[<span class="string">"username"</span>]</span><br><span class="line">        <span class="keyword">del</span> attrs[<span class="string">"code"</span>]</span><br><span class="line">        <span class="keyword">return</span> attrs</span><br></pre></td></tr></table></figure>
-
-<h4 id="Validators"><a href="#Validators" class="headerlink" title="Validators"></a>Validators</h4><blockquote>
-<p>validators可以直接作用于某个字段，这个时候，它与单独的validate作用差不多；当然，drf提供的validators还有很好的功能：UniqueValidator，UniqueTogetherValidator等；</p>
-<p>UniqueValidator: 指定某一个对象是唯一的，如，用户名只能存在唯一：</p>
-<p>UniqueTogetherValidator: 联合唯一，例如我们需要判断用户是否收藏了某个商品，前端只需要传递过来一个商品ID即可。这个时候就不是像上面那样单独作用于某个字段，而是需要进行联合唯一的判断，即用户ID和商品ID；此时我们需要在Meta中设置。</p>
-</blockquote>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">UserFavSerializer</span><span class="params">(serializers.ModelSerializer)</span>:</span></span><br><span class="line">	<span class="comment"># 获取到当前用户</span></span><br><span class="line">	user = serializers.HiddenField(</span><br><span class="line">	default=serializers.CurrentUserDefault()</span><br><span class="line">	)</span><br><span class="line"></span><br><span class="line">	<span class="class"><span class="keyword">class</span> <span class="title">Meta</span>:</span></span><br><span class="line">        model = UserFav</span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        我们需要获取的是当前登入的user</span></span><br><span class="line"><span class="string">        以后要取消收藏，只需要获取这里的id即可</span></span><br><span class="line"><span class="string">        UniqueTogetherValidator作用在多个字段之上</span></span><br><span class="line"><span class="string">        因为是联合唯一主键</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        validators = [</span><br><span class="line">        UniqueTogetherValidator(</span><br><span class="line">        	queryset=UserFav.objects.all(),</span><br><span class="line">        	fields=(<span class="string">'user'</span>, <span class="string">'goods'</span>),</span><br><span class="line">       		message=<span class="string">"已经收藏"</span></span><br><span class="line">        	)</span><br><span class="line">        ]</span><br><span class="line">        fields = (<span class="string">"user"</span>, <span class="string">"goods"</span>, <span class="string">"id"</span>)</span><br></pre></td></tr></table></figure>
-
-<h3 id="ModelSerializer"><a href="#ModelSerializer" class="headerlink" title="ModelSerializer"></a>ModelSerializer</h3><blockquote>
-<p>讲了很多Serializer的，但还是强烈建议使用ModelSerializer，因为在大多数情况下，我们都是基于model字段去开发。</p>
-<p>Why：</p>
-<p>ModelSerializer已经重载了create与update方法，它能够满足将post或patch上来的数据进行进行直接地创建与更新，除非有额外需求，那么就可以重载create与update方法。<br>ModelSerializer在Meta中设置fields字段，系统会自动进行映射，省去每个字段再写一个field。</p>
-</blockquote>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">UserDetailSerializer</span><span class="params">(serializers.ModelSerializer)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    用户详情序列化</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    <span class="class"><span class="keyword">class</span> <span class="title">Meta</span>:</span></span><br><span class="line">        model = User</span><br><span class="line">        fields = (<span class="string">"name"</span>, <span class="string">"gender"</span>, <span class="string">"birthday"</span>, <span class="string">"email"</span>, <span class="string">"mobile"</span>)</span><br><span class="line">        <span class="comment"># fields = '__all__': 表示所有字段</span></span><br><span class="line">        <span class="comment"># exclude = ('add_time',): 除去指定的某些字段</span></span><br><span class="line">        <span class="comment"># 这三种方式，存在一个即可</span></span><br></pre></td></tr></table></figure>
-
-<h4 id="ModelSerializer需要解决的2个问题"><a href="#ModelSerializer需要解决的2个问题" class="headerlink" title="ModelSerializer需要解决的2个问题"></a>ModelSerializer需要解决的2个问题</h4><blockquote>
-<p>某个字段不属于指定model，它是write_only，需要用户传进来，但我们不能对它进行save( )，因为ModelSerializer是基于Model，这个字段在Model中没有对应，这个时候，我们需要重载validate！ </p>
-</blockquote>
-<p>如在用户注册时，我们需要填写验证码，这个验证码只需要验证，不需要保存到用户这个Model中</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">validate</span><span class="params">(self, attrs)</span>:</span></span><br><span class="line">　　<span class="keyword">del</span> attrs[<span class="string">"code"</span>]</span><br><span class="line">　　<span class="keyword">return</span> attrs</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>某个字段不属于指定model，它是read_only，只需要将它序列化传递给用户，但是在这个model中，没有这个字段！我们需要用到SerializerMethodField。</p>
-</blockquote>
-<p>假设需要返回用户加入这个网站多久了，不可能维持这样加入的天数这样一个数据，一般会记录用户加入的时间点，然后当用户获取这个数据，我们再计算返回给它。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">UserSerializer</span><span class="params">(serializers.ModelSerializer)</span>:</span> </span><br><span class="line">    days_since_joined = serializers.SerializerMethodField()</span><br><span class="line">    <span class="comment"># 方法写法：get_ + 字段</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get_days_since_joined</span><span class="params">(self, obj)</span>:</span></span><br><span class="line">    <span class="comment"># obj指这个model的对象</span></span><br><span class="line">        <span class="keyword">return</span> (now() - obj.date_joined).days</span><br><span class="line">    </span><br><span class="line">    <span class="class"><span class="keyword">class</span> <span class="title">Meta</span>:</span></span><br><span class="line">        model = User</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>ModelSerializer需要解决的第二个问题中，其实还有一种情况，就是某个字段属于指定model，但不能获取到相关数据。 </p>
-</blockquote>
-<p>例如，编程语言–&gt;python–&gt;python入门学习课程，编程语言与python属于类别，另外一个属于课程，编程语言类别是python类别的一个外键，而且属于同一个model</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">parent_category = models.ForeignKey(<span class="string">'self'</span>, null=<span class="literal">True</span>, blank=<span class="literal">True</span>, verbose_name=<span class="string">'父类目别'</span>,related_name=<span class="string">'sub_cat'</span>)</span><br></pre></td></tr></table></figure>
-
-<p>现在获取编程语言下的课程，显然无法直接获取到python入门学习这个课程，因为它们两没有外键关系。SerializerMethodField( )也可以解决这个问题，只要在自定义的方法中实现相关的逻辑即可！</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">courses = SerializerMethodField()</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_courses</span><span class="params">(self, obj)</span>:</span></span><br><span class="line">	all_courses = Course.objects.filter(category__parent_category_id=obj.id)</span><br><span class="line">	courses_serializer = CourseSerializer(all_course, many=<span class="literal">True</span>, context=&#123;<span class="string">'request'</span>: self.context[<span class="string">'request'</span>]&#125;)</span><br><span class="line">	<span class="keyword">return</span> courses_serializer.data</span><br></pre></td></tr></table></figure>
-
-<h4 id="关于外键的serializers"><a href="#关于外键的serializers" class="headerlink" title="关于外键的serializers"></a>关于外键的serializers</h4><p>假设现在有一门课python入门教学(course)，它的类别是python(catogory)</p>
-<blockquote>
-<p>以下两种都是外键正向获取</p>
-</blockquote>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">category = serializers.PrimaryKeyRelatedField(queryset=CourseCategory.objects.all(), required=<span class="literal">True</span>)</span><br><span class="line"><span class="comment"># 使用 ModelSerializer类 可以直接映射</span></span><br><span class="line">category = CourseCategorySerializer()</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>外键反向获取</p>
-</blockquote>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Course</span><span class="params">(model.Model)</span>:</span></span><br><span class="line">    <span class="comment"># 外键设置related_name</span></span><br><span class="line">	category = models.ForeignKey(CourseCategory, related_name=<span class="string">'courses'</span>)</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>反向获取课程，需要通过related_name</p>
-<p>一对多，一个类别下有多个课程，一定要设定many=True</p>
-</blockquote>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">courses = CourseSerializer(many=<span class="literal">True</span>)</span><br></pre></td></tr></table></figure>
-
-
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/2019/08/28/django_rest_framework_serializer/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
         
       
     </div>
@@ -540,7 +455,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2019-08-27 19:58:02" itemprop="dateModified" datetime="2019-08-27T19:58:02+08:00">2019-08-27</time>
+                <time title="Modified: 2019-10-25 10:45:53" itemprop="dateModified" datetime="2019-10-25T10:45:53+08:00">2019-10-25</time>
               </span>
             
           
@@ -686,218 +601,104 @@
 <td align="center">获取id大于1 且 小于10的值</td>
 </tr>
 </tbody></table>
-<h3 id="外键操作"><a href="#外键操作" class="headerlink" title="外键操作"></a>外键操作</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.db <span class="keyword">import</span> models</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Publisher</span><span class="params">(models.Model)</span>:</span></span><br><span class="line">    name = models.CharField(max_length=<span class="number">32</span>, unique=<span class="literal">True</span>)</span><br><span class="line">    </span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Book</span><span class="params">(models.Model)</span>:</span></span><br><span class="line">    name = models.CharField(max_length=<span class="number">32</span>, unique=<span class="literal">True</span>)</span><br><span class="line">    pubs = models.ForeignKey(<span class="string">'Publisher'</span>)</span><br><span class="line">    </span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span><span class="params">(models.Model)</span>:</span></span><br><span class="line">    id = models.AutoField(primary_key=<span class="literal">True</span>)</span><br><span class="line">    name = models.CharField(max_length=<span class="number">32</span>)</span><br><span class="line">    age = models.IntegerField()</span><br><span class="line">    birth = models.DateField()</span><br><span class="line">    books = models.ManyToManyField(<span class="string">'Book'</span>)</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/2019/08/10/django_orm/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </div>
 
-<h4 id="正向查找：多对一（设置了foreignKey一方开始查找另一表）"><a href="#正向查找：多对一（设置了foreignKey一方开始查找另一表）" class="headerlink" title="正向查找：多对一（设置了foreignKey一方开始查找另一表）"></a>正向查找：多对一（设置了foreignKey一方开始查找另一表）</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 通过对象查找(跨表) ==&gt; 对象.外键关联字段.字段</span></span><br><span class="line">book_obj = models.Book.objects.first() <span class="comment">#查找第一本书对象</span></span><br><span class="line">book_obj = book_obj.pubs.name <span class="comment">#获取出版社对象的名称</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 字段查找(跨表) ==&gt; 关联字段__字段</span></span><br><span class="line">models.Book.objects.values_list(<span class="string">"pubs__name"</span>)</span><br></pre></td></tr></table></figure>
+    
+    
+    
+      <footer class="post-footer">
+          <div class="post-eof"></div>
+        
+      </footer>
+  </div>
+  
+  
+  
+  </article>
 
-<h4 id="反向查找：一对多"><a href="#反向查找：一对多" class="headerlink" title="反向查找：一对多"></a>反向查找：一对多</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 对象查找 ==&gt; obj.表名_set 注：表名小写_set 即关联到对应表</span></span><br><span class="line">ret_obj = models.Publisher.objects.filter(id=<span class="number">4</span>).first()</span><br><span class="line">ret = ret_obj.book_set.all() <span class="comment"># 出版社关联的所有对象书籍</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#字段查找 ==&gt; 表名__字段</span></span><br><span class="line">ret = models.Publisher.objects.filter(book__id = <span class="number">5</span>)</span><br><span class="line"></span><br><span class="line">扩展：</span><br><span class="line">如反向查询，不想book_set等写法，可以在models的类中属性约束加入`related_name`</span><br><span class="line">pubs = models.ForeignKey(<span class="string">'Publisher'</span>, related_name=<span class="string">'books'</span>)</span><br><span class="line">之后反向查询就不用表名关联了，需要也只能用配置的别名来操作。</span><br></pre></td></tr></table></figure>
+    
+        <article itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block home">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/29/pycharm_docker-compose/">
 
-<h3 id="多表查询之ManyToManyField"><a href="#多表查询之ManyToManyField" class="headerlink" title="多表查询之ManyToManyField"></a>多表查询之ManyToManyField</h3><blockquote>
-<p>“关联管理器” 是在一对多或者多对多的关联上下文中使用的管理器。</p>
-<p>它存在于下面两种情况：</p>
-<ol>
-<li><p>外键关系的反向查询</p>
-</li>
-<li><p>多对多关联关系</p>
-</li>
-</ol>
-<p>简单来说就是当 点后面的对象 可能存在多个的时候就可以使用以下的方法。</p>
-</blockquote>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">create() <span class="comment"># ==&gt; 返回新创建的对象</span></span><br><span class="line"><span class="comment"># 为序号为第一个人添加写的书的对象，添加一本书‘活着’</span></span><br><span class="line">models.Person.objects.first().book_set.create(name=<span class="string">'活着'</span>)</span><br><span class="line"></span><br><span class="line">add() <span class="comment"># ==&gt; 把指定的model对象添加到关联对象集中</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 查询id号小于3的人的对象</span></span><br><span class="line">per_obj = models.Person.objects.filter(id__lt=<span class="number">3</span>)</span><br><span class="line"><span class="comment"># 因为 books = models.ManyToManyField('Book') 所以是反向，需要 人表_set.add</span></span><br><span class="line">ret = models.Book.objects.last().person_set.add(per_obj)</span><br><span class="line">ret = models.Book.objects.first().person_set.add(*[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>]) <span class="comment">#一次添加多个</span></span><br><span class="line"><span class="comment"># Person类里面有books字段，所以 直接表名.add</span></span><br><span class="line">ret = models.Person.objects.filter(id=<span class="number">3</span>).first().books.add()</span><br><span class="line">                                             </span><br><span class="line">set() <span class="comment"># ==&gt; 更新model对象的关联对象</span></span><br><span class="line">models.Book.objects.first().person_set.set([<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>]) </span><br><span class="line"></span><br><span class="line">remove() <span class="comment"># ==&gt; 从关联对象集中移除执行的model对象</span></span><br><span class="line">book_obj = models.Book.objects.get(id=<span class="number">3</span>).person_set.remove(<span class="number">3</span>)</span><br><span class="line"></span><br><span class="line">clear() <span class="comment"># ==&gt; 从关联对象集中移除一切对象，清空。</span></span><br><span class="line">book_obj= models.Book.objects.first().person_set().clear()</span><br></pre></td></tr></table></figure>
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Johny cai">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
 
-<blockquote>
-<ol>
-<li>对于外键对象，clear（）和remove（）方法仅在null=True时存在。</li>
-<li>对于所有类型的<strong>关联字段</strong>，add()、create()、remove()、clear() 、set() 都会马上更新数据库，换句话说，在关联的任何一端，都不需要再调用save()方法。</li>
-<li>对于改变单表未关联其它表的字段，需要使用save（）一下。<br>　　per_obj.name = new_name<br>　　per_obj.save()</li>
-</ol>
-</blockquote>
-<h3 id="聚合查询和分组查询"><a href="#聚合查询和分组查询" class="headerlink" title="聚合查询和分组查询"></a>聚合查询和分组查询</h3><blockquote>
-<p><strong>聚合查询:即mysql中的聚合函数sum(),count(),avg()…</strong></p>
-<p>aggregate()是querySet的一个终止子句，意思即，它返回一个包含一些键值对的字典。<br>键的名称是聚合值的标识符，值是计算出来得聚合值。键的名称是按照字段和聚合函数的名称自动生成出来的。</p>
-</blockquote>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.db.models <span class="keyword">import</span> Avg,Sum,Max,Min,Count</span><br><span class="line"><span class="comment"># 求平均值 最大值，最小值</span></span><br><span class="line">models.Book.objects.all().aggregate(Avg(<span class="string">'price'</span>), Max(<span class="string">'price'</span>),Min(<span class="string">'price'</span>))</span><br><span class="line">&#123;<span class="string">'price__avg'</span>: <span class="number">13.233333</span>, <span class="string">'price__max'</span>: Decimal(<span class="string">'19.90'</span>), <span class="string">'price__min'</span>: Decimal(<span class="string">'9.90'</span>)&#125;</span><br></pre></td></tr></table></figure>
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Johny的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+            
+            <a href="/2019/06/29/pycharm_docker-compose/" class="post-title-link" itemprop="url">Pycharm配置docker-compose环境</a>
+          
+        </h1>
 
-<blockquote>
-<p><strong>分组：即mysql中的group_by，使用annotate()方法</strong></p>
-</blockquote>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.db.models <span class="keyword">import</span> Avg</span><br><span class="line"><span class="comment"># 单表 部门分组求平均工资</span></span><br><span class="line">Employee.objects.values(<span class="string">"dept"</span>).annotate(avg=Avg(<span class="string">"salary"</span>)）.values(<span class="string">"dept"</span>, <span class="string">"avg"</span>)</span><br><span class="line"><span class="comment"># ==&gt; select dept,AVG(salary) from employee group by dept;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 链表 查询的分组 求平均工资                                       </span></span><br><span class="line"> models.Dept.objects.all().annotate(avg=Avg(<span class="string">"employee__salary"</span>)).values(<span class="string">"name"</span>, <span class="string">"avg"</span>)</span><br><span class="line"><span class="comment"># ==&gt; select dept.name,AVG(salary) from employee </span></span><br><span class="line"> inner join dept </span><br><span class="line"> on (employee.dept_id=dept.id) </span><br><span class="line"> group by dept_id;</span><br></pre></td></tr></table></figure>
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
 
-<blockquote>
-<p>统计每一本书的作者个数</p>
-</blockquote>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">book_list = models.Book.objects.all().annotate(author_num=Count(<span class="string">'author'</span>))</span><br><span class="line"><span class="comment"># 先通过count里的author字段进行分组，然后再调用count方法计数</span></span><br></pre></td></tr></table></figure>
+              
+                
+              
 
-<blockquote>
-<p>统计出每个出版社买的最便宜的书的价格</p>
-</blockquote>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt; <span class="comment"># 正向</span></span><br><span class="line">&gt; pub_list = models.Publisher.objects.annotate(min_price=Min(<span class="string">'book__price'</span>))</span><br><span class="line">&gt; <span class="comment"># 反向</span></span><br><span class="line">&gt; models.Book.objects.values(<span class="string">'publisher__name'</span>).annotate(min_price=Min(<span class="string">'price'</span>))</span><br></pre></td></tr></table></figure>
+              <time title="Created: 2019-06-29 09:50:14" itemprop="dateCreated datePublished" datetime="2019-06-29T09:50:14+08:00">2019-06-29</time>
+            </span>
+          
+            
 
-<blockquote>
-<p>统计不止一个作者的图书</p>
-</blockquote>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">models.Book.objects.annotate(author_num=Count(<span class="string">'author'</span>)).filter(author_num__gt=<span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2019-10-25 10:46:29" itemprop="dateModified" datetime="2019-10-25T10:46:29+08:00">2019-10-25</time>
+              </span>
+            
+          
 
-<blockquote>
-<p>根据一本图书作者数量的多少对查询集QuerSet进行排序</p>
-</blockquote>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">models.Book.objects.annotate(author_num=Count(<span class="string">'author'</span>)).order_by(<span class="string">'author_num'</span>)</span><br></pre></td></tr></table></figure>
+          
 
-<blockquote>
-<p>查询各个作者出的书的总价格</p>
-</blockquote>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">models.Author.objects.annotate(sum_price=Sum(<span class="string">'book__price'</span>)).values(<span class="string">'name'</span>,<span class="string">'sum_price'</span>)</span><br></pre></td></tr></table></figure>
+        </div>
+      </header>
 
-<h3 id="F查询和Q查询"><a href="#F查询和Q查询" class="headerlink" title="F查询和Q查询"></a>F查询和Q查询</h3><h4 id="F查询"><a href="#F查询" class="headerlink" title="F查询"></a>F查询</h4><p>Django提供F()方法来做这样的比较</p>
-<p>F()的实例可以在查询中引用字段，来比较同一个model实例中两个不同字段的值。</p>
-<hr>
-<blockquote>
-<p>查询评论数大于收藏数的书籍</p>
-</blockquote>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.db.models <span class="keyword">import</span> F</span><br><span class="line"></span><br><span class="line">models.Book.objects.filter(commnet_num__gt=F(<span class="string">'keep_num'</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment"># Django 支持F()对象之间以及F()对象和常数之间的加减乘除和取模的操作</span></span><br><span class="line">models.Book.objects.filter(comment_num__lt=F(<span class="string">'keep_num'</span>)*<span class="number">2</span>)</span><br><span class="line"> </span><br><span class="line"><span class="comment">#修改操作也可以使用F函数，比如将每一本数书的价格提高30元</span></span><br><span class="line">models.Book.objects.all().update(price=F(<span class="string">'price'</span>)+<span class="number">30</span>)</span><br></pre></td></tr></table></figure>
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
-<blockquote>
-<p>详解增加表数据</p>
-</blockquote>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># save 方法增加数据</span></span><br><span class="line">author = Author.objects.get(id=<span class="number">5</span>)</span><br><span class="line">author.name=<span class="string">'jony'</span></span><br><span class="line">author.save()</span><br><span class="line"> </span><br><span class="line"><span class="comment"># update 方法更新数据</span></span><br><span class="line">Publisher.objects.filter(id=<span class="number">5</span>).update(name=<span class="string">'American publisher'</span>) <span class="comment">#不能用get(id=2)</span></span><br></pre></td></tr></table></figure>
-
-<p>注意：update方法更新数据修改不能用get的原因是：update是QuerySet对象的方法，get返回的是一个具体model对象，它没有update方法</p>
-<p>而filter返回的是一个QuerySet对象(filter里面的条件可能有多个条件符合，比如name＝’jony’,可能有两个name＝’jony’的行数据)。</p>
-<p><strong>models模型的save()方法，这个方法会更新一行里的所有列。 而某些情况下，我们只需要更新行里的某几列，update效率更高。</strong> </p>
-<p>此外，update()方法对于任何结果集（QuerySet）均有效，这意味着你可以同时更新多条记录update()方法会返回一个整型数值，表示受影响的记录条数。</p>
-<p>注意，这里因为update返回的是一个整形，所以没法用query属性；对于每次创建一个对象，想显示对应的raw sql，需要在settings加上日志记录部分</p>
-<h4 id="Q查询"><a href="#Q查询" class="headerlink" title="Q查询"></a>Q查询</h4><p><code>filter()</code> 等方法中的关键字参数查询都是一起进行“AND” 的。 如果你需要执行更复杂的查询（例如<code>OR</code> 语句），你可以使用<code>Q 对象</code>。</p>
-<blockquote>
-<p>查询id大于1并且评论数大于100的书</p>
-</blockquote>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">models.Book.objects.filter(nid__gt=<span class="number">1</span>,commentNum__gt=<span class="number">100</span>)</span><br><span class="line">models.Book.objects.filter(nid__gt=<span class="number">1</span>).filter(commentNum__gt=<span class="number">100</span>)</span><br><span class="line">models.Book.objects.filter(Q(nid__gt=<span class="number">1</span>)&amp;Q(commentNum__gt=<span class="number">100</span>))</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>查询评论数大于100或者阅读数小于200的书</p>
-</blockquote>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Q 对象可以使用&amp; 和| 操作符组合起来。当一个操作符在两个Q 对象上使用时，它产生一个新的Q 对象。 </span></span><br><span class="line">models.Book.objects.filter(Q(commentNum__gt=<span class="number">100</span>)|Q(readNum__lt=<span class="number">200</span>))</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>查询年份等于2017年或者价格大于200的书</p>
-</blockquote>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">models.Book.objects.filter(Q(publishDdata__year=<span class="number">2017</span>)|Q(price__gt=<span class="number">200</span>))</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>查询年份不是2017年或者价格大于200的书</p>
-</blockquote>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">models.Book.objects.filter(~Q(publishDdata__year=<span class="number">2017</span>)&amp;Q(price__gt=<span class="number">200</span>))</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>查询函数可以混合使用<code>Q 对象</code>和关键字参数。所有提供给查询函数的参数（关键字参数或<code>Q</code> 对象）都将”AND”在一起。但是，如果出现<code>Q</code> 对象，它必须位于所有关键字参数的前面。例如：</p>
-</blockquote>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bookList=models.Book.objects.filter(Q(publishDateyear=<span class="number">2016</span>) | Q(publishDateyear=<span class="number">2017</span>),title__icontains=<span class="string">"python"</span>)</span><br></pre></td></tr></table></figure>
-
-<h3 id="ORM表自关联"><a href="#ORM表自关联" class="headerlink" title="ORM表自关联"></a>ORM表自关联</h3><blockquote>
-<p>内自关联是指表内数据相关联的对象和表是相同字段，这样我们就直接用表内关联将外键关联设置成自身表的字段。同样表内关联也分一对多字段和多对多字段</p>
-</blockquote>
-<h4 id="创建自关联表-一对多情景"><a href="#创建自关联表-一对多情景" class="headerlink" title="创建自关联表(一对多情景)"></a>创建自关联表(一对多情景)</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 对于微博评论，每条评论都可能有子评论，但每条评的字段内容应该都是相同的，并且每条评论都只有一个父评论，这就满足了，一对多的情形。父评论为关联字段，可以对应多个子评论，这就是一对多的自关联。</span></span><br><span class="line"><span class="keyword">from</span> django.db <span class="keyword">import</span> models</span><br><span class="line"></span><br><span class="line"><span class="comment">#评论表</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Comment</span><span class="params">(models.Model)</span>:</span></span><br><span class="line">    <span class="comment">#评论的内容字段</span></span><br><span class="line">    content=models.CharField(max_length=<span class="number">255</span>)</span><br><span class="line">    <span class="comment">#评论的发布时间</span></span><br><span class="line">    push_time=models.DateTimeField(auto_now_add=<span class="literal">True</span>)</span><br><span class="line">    <span class="comment">#关联父评论的id，可以为空</span></span><br><span class="line">    pcomment = models.ForeignKey(to=<span class="string">'self'</span>,null=<span class="literal">True</span>) </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__str__</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> self.content</span><br></pre></td></tr></table></figure>
-
-<p>添加数据，第一条数据关联字段为空，说明是父评论</p>
-<p>第二条数据关联了第一条数据说明是第一条数据的字评论，同样后两条数据是是第二条数据的子评论</p>
-<table>
-<thead>
-<tr>
-<th align="center">id</th>
-<th align="center">content</th>
-<th align="center">push_time</th>
-<th align="center">pcomment_id</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">1</td>
-<td align="center">你好啊</td>
-<td align="center">2019-08-10 06:25:33</td>
-<td align="center">Null</td>
-</tr>
-<tr>
-<td align="center">2</td>
-<td align="center">兄弟你好</td>
-<td align="center">2019-08-10 06:26:13</td>
-<td align="center">1</td>
-</tr>
-<tr>
-<td align="center">3</td>
-<td align="center">老虎，你先上</td>
-<td align="center">2019-08-10 06:25:53</td>
-<td align="center">2</td>
-</tr>
-<tr>
-<td align="center">4</td>
-<td align="center">跟老虎还称兄道弟</td>
-<td align="center">2019-08-10 06:27:33</td>
-<td align="center">2</td>
-</tr>
-</tbody></table>
-<blockquote>
-<p>通过筛选父评论关联字段等于1的对象</p>
-</blockquote>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Comment.objects.filter(pcomment_id=<span class="number">1</span>)</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>根据子评论关联id正在查找父评论的内容</p>
-</blockquote>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Comment.objects.filter(pcomment_id=<span class="number">2</span>).values(<span class="string">'pcomement__content'</span>)</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>根据父评论的id 反向查找子评论</p>
-</blockquote>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Comment.objects.filter(id=<span class="number">1</span>).values(<span class="string">'comment__id'</span><span class="string">')</span></span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>注意：外键关联是在子评论中，有关联字段的是子评论，子评论查父评论是正向，父评论查子评论是反向。</p>
-</blockquote>
-<h4 id="多对多表自关联"><a href="#多对多表自关联" class="headerlink" title="多对多表自关联"></a>多对多表自关联</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 建立一张表，表字段为姓名以及朋友多对多字段，一个人可有多个朋友，也可以是多个人的朋友，找一个人的朋友是正向查找，找是某个人的朋友是反向查找。</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> django.db <span class="keyword">import</span> models</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span><span class="params">(models.Model)</span>:</span></span><br><span class="line">    name = models.CharField(max_length=<span class="number">12</span>)</span><br><span class="line">    friends = models.ManyToManyField(to=<span class="string">'self'</span>,symmetrical=<span class="literal">False</span>,related_name=<span class="string">'ship'</span>)</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__str__</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> self.name</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>正向查找关联字段__name 查找沁阳的基友</p>
-</blockquote>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Person.objects.filter(name=<span class="string">'沁阳'</span>).values(<span class="string">'friends__name'</span>)</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>反向查找 沁阳的基友</p>
-</blockquote>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Person.objects.all().filter(ship__name=<span class="string">'沁阳'</span>)</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>正向查找 王帅的朋友</p>
-</blockquote>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Person.objects.get(name=<span class="string">'王帅'</span>).friends.all()</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>反向查找 是王帅朋友的人</p>
-</blockquote>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Person.objects.filter(ship__name=<span class="string">'王帅'</span>)</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>基友是沁阳的那个人反向查找</p>
-</blockquote>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Person.objects.get(name=<span class="string">'沁阳'</span>).ship.all()</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>基友是王帅的那个人反向查找</p>
-</blockquote>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Person.objects.get(name=<span class="string">'王帅'</span>).ship.all()</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>基友含有沁阳的人反向</p>
-</blockquote>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Person.objects.filter(name=<span class="string">'沁阳'</span>).values(<span class="string">'ship__name'</span>)</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>注意：查找某人的朋友是正向，查找朋友里面有某人的人是反向查找</p>
-</blockquote>
-<h3 id="Django终端打印SQL语句"><a href="#Django终端打印SQL语句" class="headerlink" title="Django终端打印SQL语句"></a>Django终端打印SQL语句</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 在Django项目的settings.py文件中，在最后复制粘贴如下代码：</span></span><br><span class="line">LOGGING = &#123;</span><br><span class="line">    <span class="string">'version'</span>: <span class="number">1</span>,</span><br><span class="line">    <span class="string">'disable_existing_loggers'</span>: <span class="literal">False</span>,</span><br><span class="line">    <span class="string">'handlers'</span>: &#123;</span><br><span class="line">        <span class="string">'console'</span>:&#123;</span><br><span class="line">            <span class="string">'level'</span>:<span class="string">'DEBUG'</span>,</span><br><span class="line">            <span class="string">'class'</span>:<span class="string">'logging.StreamHandler'</span>,</span><br><span class="line">        &#125;,</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="string">'loggers'</span>: &#123;</span><br><span class="line">        <span class="string">'django.db.backends'</span>: &#123;</span><br><span class="line">            <span class="string">'handlers'</span>: [<span class="string">'console'</span>],</span><br><span class="line">            <span class="string">'propagate'</span>: <span class="literal">True</span>,</span><br><span class="line">            <span class="string">'level'</span>:<span class="string">'DEBUG'</span>,</span><br><span class="line">        &#125;,</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment"># 即为你的Django项目配置上一个名为django.db.backends的logger实例即可查看翻译后的SQL语句。</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="在Python脚本中调用Django环境"><a href="#在Python脚本中调用Django环境" class="headerlink" title="在Python脚本中调用Django环境"></a>在Python脚本中调用Django环境</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#  在应用的目录下建立一个py文件，将下面的代码写入</span></span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    os.environ.setdefault(<span class="string">"DJANGO_SETTINGS_MODULE"</span>, <span class="string">"项目的名字.settings"</span>)</span><br><span class="line">    <span class="keyword">import</span> django</span><br><span class="line">    django.setup()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">from</span> 应用的名字 <span class="keyword">import</span> models</span><br><span class="line"></span><br><span class="line">    <span class="string">'''所有的orm操作写在此处''</span></span><br></pre></td></tr></table></figure>
-
-<p>参考：<a href="https://www.cnblogs.com/sunxiuwen/p/9644812.html" target="_blank" rel="noopener">ORM操作</a></p>
-<p>​       <a href="https://www.cnblogs.com/Kingfan1993/p/9936541.html" target="_blank" rel="noopener">ORM表自关联</a></p>
-
+      
+          <h2 id="pycharm-配置docker-compose"><a href="#pycharm-配置docker-compose" class="headerlink" title="pycharm 配置docker-compose"></a>pycharm 配置docker-compose</h2><h3 id="远程环境配置docker-compose"><a href="#远程环境配置docker-compose" class="headerlink" title="远程环境配置docker-compose"></a>远程环境配置docker-compose</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 不通的系统 不一样的docker服务位置</span></span><br><span class="line">root@iZj6c3ws85bzpdsezxqua1Z:~<span class="comment"># systemctl status docker |grep loaded</span></span><br><span class="line">● docker.service - Docker Application Container Engine</span><br><span class="line">   Loaded: loaded (/lib/systemd/system/docker.service; enabled; vendor preset: enabled)</span><br><span class="line"></span><br><span class="line"><span class="comment">#修改这个文件 添加一个监听tcp的接口 而不只是socket。</span></span><br><span class="line">/usr/bin/dockerd -H fd:// --containerd=/run/containerd/containerd.sock</span><br><span class="line">/usr/bin/dockerd -H tcp://0.0.0.0:443 -H fd:// --containerd=/run/containerd/containerd.sock</span><br><span class="line"></span><br><span class="line"><span class="comment"># 修改完文件后 重新启动下服务</span></span><br><span class="line">systemctl daemon-reload</span><br><span class="line">systemctl restart docker</span><br><span class="line"></span><br><span class="line"><span class="comment">#防火墙开放下端口</span></span><br><span class="line">iptables -I INPUT -p tcp -m state --state NEW -m tcp --dport 443 -j ACCEPT</span><br><span class="line"><span class="comment"># 如果云上有做安全策略，还需要到控制台开放下端口</span></span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/2019/06/29/pycharm_docker-compose/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
         
       
     </div>
@@ -962,7 +763,7 @@
         
           <a href="/archives/">
         
-          <span class="site-state-item-count">3</span>
+          <span class="site-state-item-count">4</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -971,13 +772,19 @@
       
       <div class="site-state-item site-state-tags">
         
+          
+            <a href="/tags/">
+          
+        
         
         
           
         
-        <span class="site-state-item-count">1</span>
-        <span class="site-state-item-name">tags</span>
+          
         
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">tags</span>
+        </a>
       </div>
     
   </nav>
@@ -1049,6 +856,9 @@
   </div>
 
   
+    
+  
+  <script color='0,0,255' opacity='0.5' zIndex='-1' count='99' src="/lib/canvas-nest/canvas-nest.min.js"></script>
   <script src="/lib/jquery/index.js?v=3.4.1"></script>
   <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
   <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>

@@ -62,7 +62,7 @@
 <meta property="og:site_name" content="Johny的博客">
 <meta property="og:description" content="Django Rest Framework 序列号组件serializers是什么？ 将复杂的数据结构，例如ORM中的QuerySet或者Model实例对象转换成Python内置的数据类型，从而进一步方便数据和json，xml等格式的数据进行交互。  serializers的作用 1.将queryset与model实例等进行序列化，转化成json格式，返回给用户(api接口)。2.将post与pa">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-08-28T08:53:18.425Z">
+<meta property="og:updated_time" content="2019-10-25T02:46:09.497Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Django Rest Framework 序列操作">
 <meta name="twitter:description" content="Django Rest Framework 序列号组件serializers是什么？ 将复杂的数据结构，例如ORM中的QuerySet或者Model实例对象转换成Python内置的数据类型，从而进一步方便数据和json，xml等格式的数据进行交互。  serializers的作用 1.将queryset与model实例等进行序列化，转化成json格式，返回给用户(api接口)。2.将post与pa">
@@ -120,6 +120,8 @@
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
   <div class="container use-motion">
     <div class="headband"></div>
+	<a href="https://github.com/caijyi1/" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#64CEAA; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
@@ -169,6 +171,17 @@
     
 
     <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>Tags</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-categories">
+      
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>Categories</a>
 
   </li>
       
@@ -237,11 +250,19 @@
                 
               
 
-              <time title="Created: 2019-08-28 09:10:14 / Modified: 16:53:18" itemprop="dateCreated datePublished" datetime="2019-08-28T09:10:14+08:00">2019-08-28</time>
+              <time title="Created: 2019-08-28 09:10:14" itemprop="dateCreated datePublished" datetime="2019-08-28T09:10:14+08:00">2019-08-28</time>
             </span>
           
             
 
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2019-10-25 10:46:09" itemprop="dateModified" datetime="2019-10-25T10:46:09+08:00">2019-10-25</time>
+              </span>
             
           
 
@@ -264,6 +285,8 @@
 </blockquote>
 <p>简单来说，针对get来说，serializers的作用体现在第一条</p>
 <p>但如果是其他请求，serializers能够发挥2,3条的作用！</p>
+<a id="more"></a>
+
 <h3 id="常用的field"><a href="#常用的field" class="headerlink" title="常用的field"></a>常用的field</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">mobile = serializers.CharField(max_length=<span class="number">11</span>, min_length=<span class="number">11</span>)</span><br><span class="line">age = serializers.IntegerField(min_value=<span class="number">1</span>, max_value=<span class="number">100</span>)</span><br><span class="line"><span class="comment"># format可以设置时间的格式，下面例子会输出如:2018-3-20 12:10</span></span><br><span class="line">pay_time = serializers.DateTimeField(read_only=<span class="literal">True</span>,format=<span class="string">'%Y-%m-%d %H:%M'</span>)</span><br><span class="line">is_hot = serializers.BooleanField() <span class="comment"># 设置商品是否热销</span></span><br></pre></td></tr></table></figure>
 
 <h4 id="HiddenField"><a href="#HiddenField" class="headerlink" title="HiddenField"></a>HiddenField</h4><blockquote>
@@ -475,7 +498,7 @@
         
           <a href="/archives/">
         
-          <span class="site-state-item-count">3</span>
+          <span class="site-state-item-count">4</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -484,13 +507,19 @@
       
       <div class="site-state-item site-state-tags">
         
+          
+            <a href="/tags/">
+          
+        
         
         
           
         
-        <span class="site-state-item-count">1</span>
-        <span class="site-state-item-name">tags</span>
+          
         
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">tags</span>
+        </a>
       </div>
     
   </nav>
@@ -562,6 +591,9 @@
   </div>
 
   
+    
+  
+  <script color='0,0,255' opacity='0.5' zIndex='-1' count='99' src="/lib/canvas-nest/canvas-nest.min.js"></script>
   <script src="/lib/jquery/index.js?v=3.4.1"></script>
   <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
   <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
